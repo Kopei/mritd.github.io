@@ -77,7 +77,7 @@ sed的指令是一个单独的字母[s,a,i,c,d,p,y,q]。下面是一些例子：
   /<Insert Text Here>/i\
   Line 1 of inserted text\
   \        Line 2 of inserted text
-  # would leave the following in the pattern space
+
   Line 1 of inserted text
                Line 2 of inserted text
   <Insert Text Here>
