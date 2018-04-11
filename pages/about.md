@@ -2,7 +2,7 @@
 layout: page
 title: About
 description: Nothing is impossible to a willing heart!
-keywords: 漠然, mritd
+keywords: Kopei, mritd
 comments: true
 menu: 关于
 permalink: /about/

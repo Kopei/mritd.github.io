@@ -1,26 +1,26 @@
 # ---------------- #
 #   Main Configs   #
 # ---------------- #
-title: 漠然
-author: 漠然
-subtitle: "Nothing is impossible to a willing heart!"
-description: "十字路口,繁华街头......"
-keywords: 漠然
-url: "https://mritd.me"
+title: Kopei
+author: Kopei
+subtitle: ""
+description: ""
+keywords: Kopei
+url: "https://www.duduky.cn"
 date_format: "ordinal"
 favicon: /favicon.ico
 timezone: Asia/Shanghai
 encoding: "utf-8"
-source_code: https://github.com/mritd/mritd.github.io
+source_code: https://github.com/Kopei/kopei.github.io
 side_bar_repo_limit: 5
 
 # ---------------- #
 #      Author      #
 # ---------------- #
-organization: Gozap, Inc.
-organization_url: https://www.longdai.com
-location: Beijing, China
-email: mritd1234@gmail.com
+organization: Secret
+organization_url: https://github.com/Kopei/kopei.github.io
+location: Shanghai, China
+email: ncpbest@gmail.com
 
 # ---------------- #
 #    Navigation    #
@@ -37,7 +37,7 @@ navs:
   -
     href: /wiki/
     label: 维基
-  
+
 
   -
     href: /open-source/
@@ -86,12 +86,12 @@ collections:
 # ---------------- #
 #      Socials     #
 # ---------------- #
-github_username: mritd
+github_username: kopei
 #douban_username: mritd
-facebook_username: mritd1234
+facebook_username: kopei
 #weibo_username: mritd
 #zhihu_username: mritd
-twitter_username: mritd
+twitter_username: kopei
 
 # ---------------- #
 #      Comments    #
@@ -100,22 +100,22 @@ twitter_username: mritd
 comments_provider: disqus
 # !!!重要!!! 请修改下面两个用户名为你自己申请的
 # !!!Important!!! Please modify usernames below to yours
-disqus_username: mritd
+disqus_username: disqus_08ki0pPI9Z
 
 # ---------------- #
 #    Analytics     #
 # ---------------- #
 google:
-    analytics_id: UA-82387173-1
+    analytics_id: UA-114283725-1
 
 # ---------------- #
 #      Datas       #
 # ---------------- #
-skill_software_keywords: [Java, shell, Docker,Linux]
-skill_mobile_app_keywords: [Java]
+skill_software_keywords: [Python, Ruby, Docker, Kubernetes]
+skill_mobile_app_keywords: [Python]
 #skill_windows_keywords: []
 
 # ---------------- #
 # Github metadata  #
 # ---------------- #
-repository: mritd/mritd.github.io
+repository: Kopei/kopei.github.io
