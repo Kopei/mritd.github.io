@@ -35,7 +35,7 @@ dn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-04-11%20%E4%B8%8B%E5%8D%883.4
 ![http://p0iombi30.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-04-11%20%E4%B8%8B%E5%8D%884.18.43.png](http://p0iombi30.bkt.cloud
 dn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-04-11%20%E4%B8%8B%E5%8D%884.18.43.png)
 - 如上图, sidekiq和rails在同一个pod(还在考虑要不要分出来), 连接的redis使用的是helm部署(没有使用pv), mysql采用的[官网](https://kubernetes.io/docs/tasks/run-application/run-replicated-stateful-application/)StatefulSet例子 , 并且在集群前面搭建一个mycat,做读写分离, 底层的存储使用k8s的动态pv. mysql集群的问题是mycat不是HA, 所以需要继续改进, 可能是考虑`vitess`或`galera`.
-- **本地问题** prod环境必须关闭debug!; assets需要用nginx来处理. 务必做到开发,测试, 生产各个环境一致.必须是用k8s `Secret`来处理敏感信息,但是不要commit进代码库,可以直接使用的k8s控制台创建.
+- **本地问题** assets需要用nginx来处理. 务必做到开发,测试, 生产各个环境一致.必须是用k8s `Secret`来处理敏感信息,但是不要commit进代码库,可以直接使用的k8s控制台创建.
 - **其它思考**.
   - google墙的问题
   - 需要各种正向反向代理, 以便内网用户能够访问应用; 需要方向代理以便使用集团的各种服务,比如邮箱服务.

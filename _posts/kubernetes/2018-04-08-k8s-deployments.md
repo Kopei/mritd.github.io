@@ -114,4 +114,4 @@ spec:
       env: canary
       .....
 ```
-如果发布测试没有问题, 那么可以直接运行`kubectl set image deployment/app-production registry-vpc.cn-shanghai.aliyuncs.com/web2.0`滚动更新, 然后删除金丝雀部署.
+如果发布测试没有问题, 那么可以直接运行`kubectl set image deployment/app-production app=registry-vpc.cn-shanghai.aliyuncs.com/web2.0`滚动更新, 然后删除金丝雀部署.

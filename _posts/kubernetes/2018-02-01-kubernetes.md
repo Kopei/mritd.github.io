@@ -1,6 +1,12 @@
 ---
 layout: post
 title: Kubernetes主要特点
+categories: [kubernetes]
+description: k8s的主要特点总结
+keywords: kubernetes
+catalog: true
+multilingual: false
+tags: kubernetes
 ---
 
 ### 特点

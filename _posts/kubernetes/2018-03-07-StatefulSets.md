@@ -1,6 +1,12 @@
 ---
 layout: post
 title: K8S的StatefulSets
+categories: [kubernetes]
+description: k8s的有状态副本集
+keywords: kubernetes
+catalog: true
+multilingual: false
+tags: kubernetes
 update_date: 2018-03-08
 ---
 
@@ -101,7 +107,7 @@ statefulset "web" patched
      kubectl patch statefulset web -p '{"spec":{"updateStrategy":{"type":"RollingUpdate","rollingUpdate":{"partition":3}}}}'
      statefulset "web" patched
   ```
- 
+
 ## 删除StatefulSet
 简单删除命令：
 ```bash
@@ -109,5 +115,3 @@ kubectl delete -f file.yml
 kubectl delete statefulsets <statefuleset_name>
 ```
 如果想要保留pods，可以使用参数`--cascade=false`
-
-  
