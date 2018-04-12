@@ -2,6 +2,12 @@
 layout: post
 title: Openshift Origin cluster部署配置要求和主机准备
 update_date: 2018-03-01
+categories: [openshift, kubernetes]
+description: 
+keywords: openshift
+catalog: true
+multilingual: false
+tags: kubernetes, openshift
 ---
 
 > https://github.com/openshift/openshift-ansible

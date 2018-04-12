@@ -1,6 +1,12 @@
 ---
 layout: post
 title: Aliyun OSS 小结
+categories: [storage]
+description: 
+keywords: oss, aliyun
+catalog: true
+multilingual: false
+tags: oss, aliyun
 ---
 ### 使用限制
 - 冷备份恢复读取需要1分钟

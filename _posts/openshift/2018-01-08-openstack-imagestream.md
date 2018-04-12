@@ -1,6 +1,12 @@
 ---
 layout: post
 title: OpenStack ImageStream
+categories: [openshift, kubernetes]
+description: 
+keywords: openshift
+catalog: true
+multilingual: false
+tags: kubernetes, openshift
 ---
 
 ### OpenShift的Image Stream

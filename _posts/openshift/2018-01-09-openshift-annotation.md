@@ -1,6 +1,12 @@
 ---
 layout: post
 title: OpenShift Annotation
+categories: [openshift, kubernetes]
+description: 
+keywords: openshift
+catalog: true
+multilingual: false
+tags: kubernetes, openshift
 ---
 
 ### OpenShift的Annotation

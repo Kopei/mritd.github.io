@@ -3,6 +3,12 @@ layout: post
 title: Openshift的网路
 comment: true
 update_date: 2018-02-28
+categories: [openshift, kubernetes]
+description: 
+keywords: openshift
+catalog: true
+multilingual: false
+tags: kubernetes, openshift
 ---
 
 > https://docs.openshift.org/latest/architecture/networking/networking.html

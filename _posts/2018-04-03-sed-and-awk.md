@@ -1,6 +1,12 @@
 ---
 layout: post
 title: SED and AWK
+categories: [linux]
+description: 
+keywords: linux
+catalog: true
+multilingual: false
+tags: linux
 ---
 
 ## 前言

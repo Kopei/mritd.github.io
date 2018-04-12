@@ -1,6 +1,12 @@
 ---
 layout: post
 title: Openshift Commandline CheatSheet
+categories: [openshift, kubernetes]
+description: 
+keywords: openshift
+catalog: true
+multilingual: false
+tags: kubernetes, openshift
 ---
 
 #### 创建新的project

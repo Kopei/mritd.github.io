@@ -1,6 +1,12 @@
 ---
 layout: post
 title: OpenShift Blue-Green Deployment
+categories: [openshift, kubernetes]
+description: 
+keywords: openshift
+catalog: true
+multilingual: false
+tags: kubernetes, openshift
 ---
 
 ### OpenShift的蓝绿部署

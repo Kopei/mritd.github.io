@@ -1,6 +1,12 @@
 ---
 layout: post
 title: What is OpenShift Resource
+categories: [openshift, kubernetes]
+description: 
+keywords: openshift
+catalog: true
+multilingual: false
+tags: kubernetes, openshift
 ---
 > Openshift的资源定义类似Rest的资源
 

@@ -1,6 +1,12 @@
 ---
 layout: post
 title: OceanDB小结
+categories: [db]
+description: 
+keywords: oceanDB, aliyun
+catalog: true
+multilingual: false
+tags: db, aliyun
 ---
 ## 阿里自研的分布式关系型数据库
 
