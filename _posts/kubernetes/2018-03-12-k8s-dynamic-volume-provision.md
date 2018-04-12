@@ -1,6 +1,12 @@
 ---
 layout: post
-title:
+title: 在云上使用k8s动态PV
+categories: [kubernetes]
+description: 记录在阿里云使用动态pv
+keywords: kubernetes
+catalog: true
+multilingual: false
+tags: kubernetes
 ---
 > [https://v1-8.docs.kubernetes.io/docs/concepts/storage/dynamic-provisioning/](https://v1-8.docs.kubernetes.io/docs/concepts/storage/dynamic-provisioning/)
 

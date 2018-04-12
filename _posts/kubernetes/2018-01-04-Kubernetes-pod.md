@@ -1,6 +1,12 @@
 ---
 layout: post
 title: Kubernetes Pod含义
+categories: [kubernetes]
+description: pod一群鲸鱼
+keywords: kubernetes
+catalog: true
+multilingual: false
+tags: kubernetes
 ---
 > 官网文档 [https://kubernetes.io/docs/concepts/workloads/pods/pod/](https://kubernetes.io/docs/concepts/workloads/pods/pod/)
 

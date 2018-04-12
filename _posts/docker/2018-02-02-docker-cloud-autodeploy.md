@@ -1,6 +1,12 @@
 ---
 layout: post
 title: 使用Docker Cloud自动化部署
+categories: [docker]
+description: 最新消息，似乎免费的构建服务已经下线了
+keywords: docker 
+catalog: true
+multilingual: false
+tags: docker
 ---
 
 ### Docker cloud介绍
