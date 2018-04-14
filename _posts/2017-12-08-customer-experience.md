@@ -1,6 +1,12 @@
 ---
 layout: post
 title: Customer Experience
+categories: [misc]
+description: user experience
+keywords: user experience
+catalog: true
+multilingual: false
+tags: misc
 ---
 
 

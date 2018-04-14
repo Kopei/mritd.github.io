@@ -2,6 +2,12 @@
 layout: post
 title: Openshift中Kubernetes的基础设施
 update_date: 2018-03-07
+categories: [openshift, kubernetes]
+description: 
+keywords: openshift
+catalog: true
+multilingual: false
+tags: kubernetes, openshift
 ---
 
 ## 前言

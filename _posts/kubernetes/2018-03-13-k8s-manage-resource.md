@@ -1,6 +1,12 @@
 ---
 layout: post
 title: K8S管理容器的计算资源
+categories: [kubernetes]
+description: 简单先记录一下
+keywords: kubernetes
+catalog: true
+multilingual: false
+tags: kubernetes
 ---
 > [https://v1-8.docs.kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/](https://v1-8.docs.kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/)
 

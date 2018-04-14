@@ -1,6 +1,12 @@
 ---
 layout: post
 title: 高性能mysql笔记
+categories: [mysql]
+description: 
+keywords: mysql
+catalog: true
+multilingual: false
+tags: mysql
 ---
 
 ## 此笔记只针对mysql5.5

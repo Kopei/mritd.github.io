@@ -1,6 +1,12 @@
 ---
 layout: post
 title: Aliyun RDS for Mysql
+categories: [mysql]
+description: 
+keywords: mysql
+catalog: true
+multilingual: false
+tags: mysql
 ---
 ## RDS文档小结
 默认部署主备架构且提供了容灾、备份、恢复、监控、迁移等方面的全套解决方案

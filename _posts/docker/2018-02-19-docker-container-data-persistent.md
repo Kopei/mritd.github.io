@@ -1,6 +1,12 @@
 ---
 layout: post
 title: 三种docker数据持久的方式
+categories: [docker]
+description: docker官网关于volume方式的解释
+keywords: docker 
+catalog: true
+multilingual: false
+tags: docker
 ---
 
 ### docker提供三种方式把数据挂载到容器

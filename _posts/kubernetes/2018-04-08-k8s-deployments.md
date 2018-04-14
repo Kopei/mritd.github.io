@@ -1,16 +1,21 @@
 ---
 layout: post
 title: Kubernetes Deployment
+categories: [kubernetes]
+description: 使用k8s部署可以较容易做到金丝雀，蓝绿部署
+keywords: kubernetes
+catalog: true
+multilingual: false
+tags: kubernetes
 ---
 
-### k8s的部署控制器Deployment
+### k8s的部署Deployment
 k8s的`Deployment`提供了`pods`和`ReplicaSets`的更新.
 只需在Deployment对象声明你想要的部署状态, `Deployment`控制器就会更新到需要的状态.所以这种方式是声明式的.
 除非第一次部署,k8s采用的部署方式是rolling update(滚动更新). 大致意思是保证服务可用的情况下, 创建一定量的新pods,然后删除一定量的pods,循环这些步骤直到部署完成.
 
 ### 一个例子
 ```
----
 apiVersion: apps/v1beta2 # for versions before 1.8.0 use apps/v1beta1
 kind: Deployment   # apiVersion, kind, metadata, spec这四个字段必须要
 metadata:

@@ -1,6 +1,12 @@
 ---
 layout: post
 title: 一次奇怪的Docker Daemon Error
+categories: [docker]
+description: 一次重装docker之旅
+keywords: docker 
+catalog: true
+multilingual: false
+tags: docker
 ---
 
 ### 前言

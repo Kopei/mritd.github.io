@@ -2,6 +2,12 @@
 layout: post
 title: Openshift Deployment
 update_date: 2018-02-21
+categories: [openshift, kubernetes]
+description: 
+keywords: openshift
+catalog: true
+multilingual: false
+tags: kubernetes, openshift
 ---
 
 > For _version v3.7_; _OS Mac_; not recommend for production

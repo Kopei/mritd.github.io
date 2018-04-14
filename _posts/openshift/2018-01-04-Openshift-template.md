@@ -1,6 +1,12 @@
 ---
 layout: post
 title: Openshift Template
+categories: [openshift, kubernetes]
+description: 
+keywords: openshift
+catalog: true
+multilingual: false
+tags: kubernetes, openshift
 ---
 
 ### Openshift的模板

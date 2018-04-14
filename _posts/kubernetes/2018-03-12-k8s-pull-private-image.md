@@ -1,6 +1,12 @@
 ---
 layout: post
 title: K8S使用私有镜像
+categories: [kubernetes]
+description: 如果使用aliyun，需要预先开通镜像仓库服务
+keywords: kubernetes
+catalog: true
+multilingual: false
+tags: kubernetes
 ---
 
 > [https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#add-imagepullsecrets-to-a-service-account](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#add-imagepullsecrets-to-a-service-account)
