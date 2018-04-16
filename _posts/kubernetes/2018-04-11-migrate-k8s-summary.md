@@ -32,8 +32,8 @@ dn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-04-11%20%E4%B8%8B%E5%8D%883.4
 
 ## 一些细节和原来本地的问题
 新的部署主要把原来多个进程从一个容器分离了出来, 用docker提倡的一个进程一个container; 把`rake db:migrate`等操作做成k8s的job; 并且把底层的存储用了云上的OSS和NAS. 由于是实验性的部署, 并没有使用managed service, 如rds和redis, 这部分还是自己搭建的, 以后会切换为云上的服务. 大致细节图:
-![http://p0iombi30.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-04-11%20%E4%B8%8B%E5%8D%884.18.43.png](http://p0iombi30.bkt.cloud
-dn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-04-11%20%E4%B8%8B%E5%8D%884.18.43.png)
+![http://p0iombi30.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-04-16%20%E4%B8%8B%E5%8D%882.28.53.png](http://p0iombi30.b
+kt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-04-16%20%E4%B8%8B%E5%8D%882.28.53.png)
 - 如上图, sidekiq和rails在同一个pod(还在考虑要不要分出来), 连接的redis使用的是helm部署(没有使用pv), mysql采用的[官网](https://kubernetes.io/docs/tasks/run-application/run-replicated-stateful-application/)StatefulSet例子 , 并且在集群前面搭建一个mycat,做读写分离, 底层的存储使用k8s的动态pv. mysql集群的问题是mycat不是HA, 所以需要继续改进, 可能是考虑`vitess`或`galera`.
 - **本地问题** assets需要用nginx来处理. 务必做到开发,测试, 生产各个环境一致.必须是用k8s `Secret`来处理敏感信息,但是不要commit进代码库,可以直接使用的k8s控制台创建.
 - **其它思考**.
