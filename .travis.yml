@@ -8,10 +8,10 @@ script:
   - bundle install
   - bundle exec jekyll build
 after_success:
-  - git clone https://github.com/mritd/mritd.me.git
-  - cd mritd.me && rm -rf * && cp -r ../_site/* .
-  - git config user.name "mritd"
-  - git config user.email "mritd1234@gmail.com"
+  - git clone https://github.com/kopei/kopei.github.io.git
+  - cd kopei.github.io && rm -rf * && cp -r ../_site/* .
+  - git config user.name "kopei"
+  - git config user.email "kopei1234@gmail.com"
   - git add --all .
   - git commit -m "Travis CI Auto Builder"
   - git push --force https://$JEKYLL_GITHUB_TOKEN@github.com/mritd/mritd.me.git master
