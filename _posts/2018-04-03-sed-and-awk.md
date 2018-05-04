@@ -2,7 +2,7 @@
 layout: post
 title: SED and AWK
 categories: [linux]
-description: 
+description:
 keywords: linux
 catalog: true
 multilingual: false
@@ -123,7 +123,7 @@ awk的语法由三部分组成：
 - 可选的BEGIN部分，用于先于文本输入执行逻辑
 - pattern-action部分，根据输入数据，如果有pattern匹配，就采取对应的action。awk不会改变原输入文件, 可以用`>`重定向输出文件。
   - 每一个awk程序必须有一个pattern或者一个action, 或者两者都有。如果没有指定pattern, 默认pattern是匹配所有的行; 没有指定action,默认action是打印当前记录。patterns通过简单文本展示，action需要大括号{}包住来区分两者。
-  - Patterns模式， 就是一个选择器，它决定了后续的action是否执行。pattern可以是正则表达式（//包住)，关系（大于等于）或者字符串匹配，！反向匹配，或通过&&，||任意组合。BEGIN和END是一个特殊的pattern, 用于初始化和总结。
+  - Patterns模式， 是一个选择器，它决定了后续的action是否执行。pattern可以是正则表达式（"//"包住)，关系（大于等于）或者字符串匹配，"!"感叹号反向匹配，或通过"&&"或"\|\|"任意组合。BEGIN和END是一个特殊的pattern, 用于初始化和总结。
   - Actions行动。action可以是一组类C表达式，也可以是数字或字符串表达式、赋值或格式化输出字符串流。action会在匹配的每一行执行，如果pattern没有提供，action会在每一行执行，如果action没有提供，所有pattern匹配的行会被打印到标准输出。action和pattern需要用有无{}来区分(有{}就是action)。
 - 可选的END部分，用于文本处理完后进一步执行逻辑
 ```bash
