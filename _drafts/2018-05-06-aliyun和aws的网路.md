@@ -41,3 +41,16 @@ tags: cloud
 kt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-05-06%20%E4%B8%8B%E5%8D%888.21.58.png)
 ![http://p0iombi30.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-05-06%20%E4%B8%8B%E5%8D%888.37.46.png](http://p0iombi30.bkt.clouddn.com/%E5%B1%8F%E5%B9%95
 %E5%BF%AB%E7%85%A7%202018-05-06%20%E4%B8%8B%E5%8D%888.37.46.png)
+
+### aws有三种提供vpn连接的方式：
+- Virtual Private Gateway。VGW是高可用和可扩展的。 给VPC绑定一个VGW, 就可以通过IPsec建立安全连接。 VGW支持静态路由和BGP方式， 如果是静态路由，那么对方网路的IP段不能和VPC相同。
+- AWS VPN CloudHub. CloudHub是高可用和可扩展的。如果有多个站点需要建立安全通信，可以使用CloudHUB, 这样不仅可以访问VPC内资源，还可以在站点间建立通信。
+- 第三方的software VPN
+
+
+
+
+
+
+
+
