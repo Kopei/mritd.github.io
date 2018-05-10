@@ -51,3 +51,17 @@ kt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-05-06%20%E4%B8%8B%E5%
 - latency-based routing. 基于延迟时间选择延迟低的分发流量
 - geolocation routing. 根据用户的IP所在地分发流量, 有时候可能定位用户IP, 那么需要定义一个默认路由, 方式路由出现no answer.
 - failover routing. 失效转移路由.作为辅助路由, 当主要路由健康检查失败, 那么切换到这个路由.
+
+### aws有三种提供vpn连接的方式：
+- Virtual Private Gateway。VGW是高可用和可扩展的。 给VPC绑定一个VGW, 就可以通过IPsec建立安全连接。 VGW支持静态路由和BGP方式， 如果是静态路由，那么对方网路的IP段不能和VPC相同。
+- AWS VPN CloudHub. CloudHub是高可用和可扩展的。如果有多个站点需要建立安全通信，可以使用CloudHUB, 这样不仅可以访问VPC内资源，还可以在站点间建立通信。
+- 第三方的software VPN
+
+
+
+
+
+
+
+
+>>>>>>> 978e114c0b8738e4c19ddcd80d9753c1f4c53fb2:_drafts/2018-05-06-aliyun和aws的网路.md
