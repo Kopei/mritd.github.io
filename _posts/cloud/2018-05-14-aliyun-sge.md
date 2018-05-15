@@ -59,6 +59,116 @@ qconf -ape <PE name>
 
 
 ## 简单使用sge
+### qsub
+使用`qsub`提交job后, 调度器会对job做调度并且直接返回qsub是否调度成功. 例子:
+```
+$ qsub -cwd -b y -o my.txt -q all.q@iZuf63555dkqqm58d7dc9nZ hostname
+Your job 8 ("hostname") has been submitted
+$ qstat -j 8
+==============================================================
+job_number:                 8
+exec_file:                  job_scripts/8
+submission_time:            Tue May 15 11:39:27 2018
+owner:                      rookie
+uid:                        500
+group:                      rookie
+gid:                        500
+sge_o_home:                 /home/rookie
+sge_o_log_name:             rookie
+sge_o_path:                 /usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/home/rookie/bin
+sge_o_shell:                /bin/bash
+sge_o_workdir:              /home/rookie
+sge_o_host:                 iZuf668cj7e7k2ws1y6pdkZ
+account:                    sge
+cwd:                        /home/rookie
+mail_list:                  rookie@iZuf668cj7e7k2ws1y6pdkZ
+notify:                     FALSE
+job_name:                   hostname
+stdout_path_list:           NONE:NONE:my.txt
+jobshare:                   0
+hard_queue_list:            all.q@iZuf63555dkqqm58d7dc9nZ
+env_list:                   
+script_file:                hostname
+error reason    1:          can't get password entry for user "rookie". Either the user does not exist or NIS error!
+scheduling info:            (Collecting of scheduler job information is turned off)
+```
+上述job执行失败, 由于新创建的用户没有加入sge entry. 如果执行成功会在执行节点的当前目录看到`my.txt`, 默认是用户家目录. 参数详解:
+- -o <output file>: 输出文件的路径. 如果不指定文件名, 默认采用<job_name>.o<job_id>
+- -e <errorfile>: 指定错误文件, 默认采用 <job_name>.e<job_id>格式
+- -b y/n: 执行的是脚本还是二进制job.
+- -N [name]: job 名称
+- -A [account name] 这个job的资源消耗记在谁的头上
+- -r [y,n]: 这个job是否可重新跑, 默认y
+- -cwd: qsub的-cwd选项告诉Sun Grid Engine，该作业应该在调用qsub的相同目录中执行
+- -q: 指定节点上的队列
+- -S [shell path]: 指定使用哪个shell
+- -pe <parallel environment> [<number of cores>]: 执行并行job时需要指定CPU核数.  
+- -l resource=value,.. : 指定资源需求, 使job在满足需求的队列上运行. `-l`可以在qsub, qsh, qrsh, qlogin, qalter上使用. `resource`这个键值可以是queue或host相关, 可以是queue相关的资源属性:
+  - qname
+  - hostname
+  - notify
+  - calendar
+  - min_cpu_interval
+  - tmpdir
+  - seq_no
+  - s_rt
+  - h_rt
+  - s_cpu
+  - h_cpu
+  - s_data
+  - h_data
+  - s_stack
+  - h_stack
+  - s_core
+  - h_core
+  - s_rss
+  - h_rss
+host相关是资源属性有:
+  - slots
+  - s_vmem
+  - h_vmem
+  - s_fsize
+  - h_fsize
+
+### 输出参数
+有三个参数可以配置输出流
+- -e path_list: 设置标准错误输出流路径
+- -j y[es]n[o]: 合并标准输出和标准错误流
+- -o path_list: 设置标准输出路径
+
+### 执行脚本中设置参数
+在job的执行脚本头上写入`#$`可以设置job的qsub参数, 这样就不需要在命令行输入参数.
+
+### 指定队列
+```
+qsub -q queue_name job
+qsub -q queue_name@hostname job
+qsub -q queue_name@@hostgroupname job
+qsub -q '*@@hostgroupname' job # 可以使用通配符匹配
+```
+
+### SGE 环境变量继承关系
+execd -> shepherd -> shell -> job, 后续继承的环境变量可以被覆盖
+
+
+### 默认job参数, 在提交节点设置$HOME/.sge_request
+可以设置以上这个文件来让job启用默认参数, 比如邮件通知方式:
+```
+-M <email-address>  # -M root@localhost 邮件会给执行节点root发邮件
+-m baes  ## will notify whether job is begin, aborted, end, suspend.  
+-v PYTHONPATH ## environment variables
+-V   # pass all environment variables, 这个参数可能有bug
+-pe smp 2 ## pe settings
+```
+如下三个文件是默认参数读取的文件, 可以被覆盖.
+$SGE_ROOT/$SGE_CELL/common/sge_request
+$HOME/.sge_request
+$PWD/.sge_request
+
+### qdel job_id
+### qhost 查看所有节点状态
+### qstat 查看queue中job
+输出的`state`有d(eletion),  E(rror), h(old), r(unning), R(estarted), s(uspended), S(uspended), t(ransfering), T(hreshold) or w(aiting).
 
 ## 用户权限管理
 SGE有4个角色: Managers, Operators, Owners, Users.
