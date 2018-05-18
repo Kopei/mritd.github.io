@@ -167,8 +167,20 @@ $PWD/.sge_request
 
 ### qdel job_id
 ### qhost 查看所有节点状态
-### qstat 查看queue中job
-输出的`state`有d(eletion),  E(rror), h(old), r(unning), R(estarted), s(uspended), S(uspended), t(ransfering), T(hreshold) or w(aiting).
+### qstat 查看queue和job的状态
+qstat输出的job`state`有d(eletion),  E(rror), h(old), r(unning), R(estarted),q(ueued), s(uspended), S(uspended), t(ransfering), T(hreshold) or w(aiting).  `qstat -explain c -j <job_id>`可以查看具体job跑失败的原因. 下面是一些例子:
+```
+qstat -u '*' Displays list of all jobs from all users.
+qstat -g c    show available nodes and load
+qstat -u joeuser  -- useful in seeing list of jobs from particular user. Especially when particular user job are having troubles
+qstat -u hpc1***: Displays list of all jobs belonging to user hpc1***
+qstat -f: gives full information about jobs and queues. Provides a full listing of the job that has the listed Job ID (or all jobs if no Job ID is given).  See qstat -f below.
+qstat -j job_number -- provide detailed information why the pending job is not being scheduled. See qstat -j below
+qhost -F
+qstat -g t -- command is useful for showing where all of your parallel tasks are running, otherwise you only see where the "master" task (MPI task #0) is running.
+qstat -s p shows pending jobs, which is all those with state "qw" and "hqw".
+qstat -s h shows hold jobs, which is all those with state "hqw".
+```
 
 ## 用户权限管理
 SGE有4个角色: Managers, Operators, Owners, Users.
@@ -176,6 +188,13 @@ SGE有4个角色: Managers, Operators, Owners, Users.
 - Operators: 除了没有add, delete, modify队列, 具有manager所有权限.
 - Owners: 队列拥有者, 可以对他所有的队列做任何操作.
 - Users: 没有管理集群和队列的权限, 只能使用队列.
+
+### 配置用户Access list
+只要用户在一个提交节点和一个执行节点有ID, 那么就可以使用SGE. 但是管理员可以限制用户对某些队列的访问限制, 也可以限制对一些工具的使用比如PE. 指定访问权限需要定义`User Access List`, 可以使用unix的user和group定义user access list. 然后根据这个list来限制对资源的读写权限.
+```
+qconf -au username[,...] access-list-name[,...]
+qconf -sul ##查看所有user access list
+```
 
 ## 使用sdk调整执行节点
 - 调整队列
@@ -191,3 +210,6 @@ qconf -ahgrp <hostgroupname>  ## add host group to group list
 qconf -shgrpl
 @allhosts
 ```
+
+## 执行节点动态拓展
+使用`qstat -u '*' -s p`检查`qw`或`hwq`队列的长度, 相应地启动执行节点进行动态拓展; 同时当队列为空时, 减少执行节点到一定数目
