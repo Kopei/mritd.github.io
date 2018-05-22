@@ -2,7 +2,7 @@
 layout: post
 title: 高性能mysql笔记
 categories: [mysql]
-description: 
+description:
 keywords: mysql
 catalog: true
 multilingual: false
@@ -26,11 +26,11 @@ tags: mysql
   - `select ... lock in share mode;`
   - `select ... for update;`
 
-### MVCC
+### MVCC(Multi-Version concurrent control)
 - 实现机制： 基于某个时间点的快照。非阻塞度，行锁写
 - InnoDB在每个行记录后面保存两个隐藏的列(时间上根据mysql版本不同，有更多的隐藏列, 5.7是3个字段）， 一个行的创建时间，一个是过期时间。时间都是系统版本号。
 - 在repeartable read隔离等级下， mvcc的操作：
-  - select: 
+  - select:
   1. 只会查到当前事务版本号前面或等于当前版本号（事务修改过）的行。
   2. 删除的行也会作比较。
   - insert:
@@ -39,7 +39,7 @@ tags: mysql
   1. 删除一行，在删除列加入当前系统版本
   - update:
   1. 插入一条新的记录，把老的记录删除行更新系统版本。
-### InnoDB 
+### InnoDB
 - 它是被设计为处理大量短时事务。
 - 使用next-key locking实现防止幻读。
 
@@ -71,8 +71,8 @@ repeatable read是mysql默认隔离等级，保证同一个事务多次读取同
   - 逻辑备份的优点：
   1. 逻辑备份可以消除底层存储引擎的影响
   2. 如果内存保存着正确数据但是磁盘坏了，不能复制一个正确的物理备份， 仍可能导出一个正常的逻辑备份。
-  
-  - 逻辑备份的缺点： 
+
+  - 逻辑备份的缺点：
   1. 需要消耗cpu，恢复时间较长，需要建index等。
   2. ASCII形式的数据可能比原始数据大
   3. 恢复时可能由于bug或者浮点表示问题，无法保证还原一模一样的数据。
@@ -136,4 +136,3 @@ repeatable read是mysql默认隔离等级，保证同一个事务多次读取同
   - 键值前缀, 仅适用于第一个column，即last_name begin with
   - 完全匹配一个列，范围匹配另一个列
   - 仅仅查询索引
-  
