@@ -2,7 +2,7 @@
 layout: post
 title: Aliyun RDS for Mysql
 categories: [mysql]
-description: 
+description:
 keywords: mysql
 catalog: true
 multilingual: false
@@ -76,14 +76,14 @@ tags: mysql
 - 使用测压[SysBench0.5](https://github.com/akopytov/sysbench)
 - 准备数据
 ```
-sysbench --num-threads=32 --max-time=3600 --max-requests=999999999 --test= oltp.lua --oltp-table-size=10000000 
---oltp-tables-count=64 --db-driver=mysql --mysql-table-engine=innodb 
+sysbench --num-threads=32 --max-time=3600 --max-requests=999999999 --test= oltp.lua --oltp-table-size=10000000
+--oltp-tables-count=64 --db-driver=mysql --mysql-table-engine=innodb
 --mysql-host= XXXX --mysql-port=3306 --mysql-user= XXXX --mysql-password= XXXX prepare
 ```
 - 压测性能
 ```
 sysbench --num-threads=32 --max-time=3600 --max-requests=999999999 --test= oltp.lua --oltp-table-size=10000000
---oltp-tables-count=64 --db-driver=mysql --mysql-table-engine=innodb --mysql-host= XXXX --mysql-port=3306 
+--oltp-tables-count=64 --db-driver=mysql --mysql-table-engine=innodb --mysql-host= XXXX --mysql-port=3306
 --mysql-user= XXXX --mysql-password= XXXX run
 ```
 - 清理环境
@@ -114,11 +114,16 @@ sysbench --num-threads=32 --max-time=3600 --max-requests=999999999 --test= oltp.
 - 会话诊断和终止
 - 分析慢sql
 - CloudDBA仅适用于公共云华北1、华北2、华东1、华东2、华南1地域的MySQL 5.5和MySQL 5.6版本的实例
+监控的metrics:
+- IOPS
+- latency
+- throughput
+- queue depth
 
 ### mysql5.6的读写分离
 - 读写分离和主实例、读实例的区别，后者单独有连接地址，业务逻辑选择进行连接。读写分离是一个统一的地址，程序自动进行读写分流。
 - 用户只需要购买读实例，可以免费试用读写分离
-  
+
   <img src="http://docs-aliyun.cn-hangzhou.oss.aliyun-inc.com/assets/pic/51073/cn_zh/1505467133787/%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB%E5%9C%B0%E5%9D%80.png" alt="Drawing" width="400"/>
 
 ### 数据备份和恢复
@@ -132,8 +137,11 @@ sysbench --num-threads=32 --max-time=3600 --max-requests=999999999 --test= oltp.
 ### 数据加密
 - SSL
 - TDE 指定参与加密的数据库或者表。这些数据库或者表中的数据在写入到任何设备（磁盘、SSD、PCIE 卡）或者服务（OSS、OAS）前都会进行加密.
+
 ### 其它技术运维问题
 - [其他问题](https://help.aliyun.com/knowledge_list_page/41698/1.html)
 
-
-
+### 影响数据库存储性能的方面
+- 计算实例的配置
+- IO的性能
+- 负载需求
