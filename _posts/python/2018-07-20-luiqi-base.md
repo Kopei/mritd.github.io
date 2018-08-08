@@ -69,6 +69,57 @@ luigi.run()
 ### Parameter
 `Parameter`可以给每个task增加参数, 用于定制化一些额外信息.
 
+- 使用@inherits, @requires来传递多个task直接的参数, 考虑如下问题:
+```python
+class TaskA(luigi.ExternalTask):
+    param_a = luigi.Parameter()
+
+    def output(self):
+        return luigi.LocalTarget('/tmp/log-{t.param_a}'.format(t=self))
+
+class TaskB(luigi.Task):
+    param_b = luigi.Parameter()
+    param_a = luigi.Parameter()
+
+    def requires(self):
+        return TaskA(param_a=self.param_a)
+
+class TaskC(luigi.Task):
+    param_c = luigi.Parameter()
+    param_b = luigi.Parameter()
+    param_a = luigi.Parameter()
+
+    def requires(self):
+        return TaskB(param_b=self.param_b, param_a=self.param_a)
+```
+对上述代码,下游的task将会需要写上所有上游需要的参数, 这样就会产生参数爆炸, 如果想要简化参数, 可以是使用`@inherits`和`requires`
+```python
+import luigi
+from luigi.util import inherits
+
+class TaskA(luigi.ExternalTask):
+    param_a = luigi.Parameter()
+
+    def output(self):
+        return luigi.LocalTarget('/tmp/log-{t.param_a}'.format(t=self))
+
+@inherits(TaskA)
+class TaskB(luigi.Task):
+    param_b = luigi.Parameter()
+
+    def requires(self):
+        t = self.clone(TaskA)  # or t = self.clone_parent()
+
+        return t
+
+@inherits(TaskB)
+class TaskC(luigi.Task):
+    param_c = luigi.Parameter()
+
+    def requires(self):
+        return self.clone(TaskB)
+```
+
 ## Luigi的模式
 Luigi没有中间文件的概念, 所以如果两个依赖的任务运行一半失败, 中间结果将会被保留.
 
