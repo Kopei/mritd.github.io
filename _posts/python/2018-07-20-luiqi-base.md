@@ -34,6 +34,7 @@ class LogFiles(luigi.ExternalTask):
 ```
 
 - run()
+
 run()函数是实际的任务运行地方, 如果有requires那么就会先解决依赖, 然后跑run的逻辑. input()会把requires的输出封装成targets, 用作run()的输入.
 ```python
 class TaskWithManyInputs(luigi.Task):
@@ -46,6 +47,7 @@ class TaskWithManyInputs(luigi.Task):
 ```
 
 - task的事件和回调
+
 luigi有事件系统能够注册事件回调, 然后使用自定义的task触发任务.
 ```python
 @luigi.Task.event_handler(luigi.Event.SUCCESS)
@@ -70,6 +72,7 @@ luigi.run()
 `Parameter`可以给每个task增加参数, 用于定制化一些额外信息.
 
 - 使用@inherits, @requires来传递多个task直接的参数, 考虑如下问题:
+
 ```python
 class TaskA(luigi.ExternalTask):
     param_a = luigi.Parameter()
@@ -137,7 +140,7 @@ class AllReports(luigi.WrapperTask):
         yield FooBarBazReport(self.date)
 ```
 
-### luigi的执行模型
+### Luigi的执行模型
 luigi的执行模型很简单, 一个worker的进程执行所有tasks, 所以如果有成千上万个tasks, 扩展性将成为问题.
 
 ### 调度
