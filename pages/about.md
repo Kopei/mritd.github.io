@@ -10,7 +10,7 @@ permalink: /about/
 
 ### 0x5 See You Again
 
-See You Again
+Let us relax!
 
 ---
 
