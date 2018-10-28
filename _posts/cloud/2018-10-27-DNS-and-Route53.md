@@ -24,7 +24,11 @@ tags: cloud
 ![http://p0iombi30.bkt.clouddn.com/fqdn-explained.jpg](http://p0iombi30.bkt.clouddn.com/fqdn-explained.jpg)
 
 ### 浏览器解析DNS步骤
-浏览器输入域名后， 计算机先检查本地hosts文件是否存在对应ip
+浏览器输入域名后， 从域名解析到实际的IP, 会走如下步骤：
+- 计算机先检查浏览器缓存是否存在， 如果是使用chrome, 可以在地址栏输入`chrome://net-internals/#dns`查看缓存信息。
+- 浏览器的缓存有一些限制， 比如缓存的条目数只有1000等等，所以如果不命中缓存， 那么就会查询本地hosts文件是否存在对应的ip。
+- 如果还是不中那么检查本地DNS服务器（服务器设置的DNS首选项）缓存是否命中。
+- 如果还是没有命中，那么就会查询DNS服务器。（后续还会根据IP是否在`zone file`，是否采取转发等不同设置， 向上级迭代查询）
 
 
 
