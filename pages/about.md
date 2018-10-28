@@ -10,15 +10,15 @@ permalink: /about/
 
 ### 0x5 See You Again
 
-See You Again
+Let us relax!
 
 ---
 
-![hexo_about_me_logo](https://kopei.github.io/markdown/hexo_about_me_logo.jpg)
+惚兮恍兮，其中有象；恍兮惚兮，其中有物。
 
 ---
 
 <audio  autoplay="autoplay">
-  <source src="https://kopei.github.io/markdown/music_see_you_again.mp3" type="audio/mpeg" />
+  <source src="http://p0iombi30.bkt.clouddn.com/48+-+%E5%8F%8D%E9%AB%98%E6%BD%AE.flac" type="audio/flac" />
 Your browser does not support the audio element.
 </audio>
