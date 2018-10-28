@@ -19,6 +19,8 @@ tags: cloud
 `TLD`是可以被按层级扩展成多个子域名的。如`example.com`中`example`就是`SLD`, 又如`baidu.com.cn`中`.com`是`SLD`. `SLD`和`host`主要的区别在于host定义的是一个资源，
 而`SLD`是一个域名的扩展。不管是`SLD`还是`host`, 我们都从域名的左边读起， 可以看到越左边的部分意义越具体。
 
+### Zone file
+
 ### Fully Qualified Domain Name(FQDN)
 按ICANN的标准FQDN是需要按`.`结尾的，虽然通常我们并没有这么做. 具体语法如下图所示
 ![http://p0iombi30.bkt.clouddn.com/fqdn-explained.jpg](http://p0iombi30.bkt.clouddn.com/fqdn-explained.jpg)
@@ -29,6 +31,8 @@ tags: cloud
 - 浏览器的缓存有一些限制， 比如缓存的条目数只有1000等等，所以如果不命中缓存， 那么就会查询本地hosts文件是否存在对应的ip。
 - 如果还是不中那么检查本地DNS服务器（服务器设置的DNS首选项）缓存是否命中。
 - 如果还是没有命中，那么就会查询DNS服务器。（后续还会根据IP是否在`zone file`，是否采取转发等不同设置， 向上级迭代查询）
+下图很好解释流整个dns解析流程, 不过我这里没有涉及上层的具体解释.
+![http://p0iombi30.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-10-28%20%E4%B8%8B%E5%8D%887.51.42.png](http://p0iombi30.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-10-28%20%E4%B8%8B%E5%8D%887.51.42.png)
 
 
 
