@@ -10,8 +10,9 @@ tags: cloud
 ---
 
 ## DNS基本概念
+DNS(Domain Name Service)是人们使用英特网的基础服务，像一个电话本一样对应域名找到IP地址。`DNS`采用层级的结构， 不同层采用`.`来分层。顶层是root, 用一个`.`表示，后面就是TLD了。
 `Top Level Domain`(TLD)顶级域名是域名中的最后一个部分， 比如`.com`. `Internet Corporation for Assigned Names and Numbers`(ICANN)
-负责管理和分配域名， 这些域名会在`Network Information Center`(InterNIC)注册， 每个域名会在一个叫`Whois`的数据库注册， 以维护域名的唯一性。
+负责管理和分配部分顶级域名， 这些顶级域名下可以再分配我们常见的域名，这些域名会在`Network Information Center`(InterNIC)注册， 每个域名会在一个叫`Whois`的数据库注册， 以维护域名的唯一性。
 这里有一个误区，域名如`example.com`, 一般所说的二级域名是应该是`example`(而国内的运营商叫做一级域名)， 其他的一次往后推.
 
 ### host和Subdomain
@@ -19,10 +20,21 @@ tags: cloud
 `TLD`是可以被按层级扩展成多个子域名的。如`example.com`中`example`就是`SLD`, 又如`baidu.com.cn`中`.com`是`SLD`. `SLD`和`host`主要的区别在于host定义的是一个资源，
 而`SLD`是一个域名的扩展。不管是`SLD`还是`host`, 我们都从域名的左边读起， 可以看到越左边的部分意义越具体。
 
-### Zone file
-`zone file`区域档案是DNS服务器存储域名和IP映射记录的文本。每个记录称为资源记录（`resource record`）。`zone file`有两个指令需要注意， 一个是`$ORIGIN`参数设定， 代表了本NS管理的域。
-`$TTL`表示解析记录在缓存中默认过期时间。
+### Name Server
+名字服务器就是实际把域名解析成Ip的服务器。由于域名实在太多，名字服务器需要转发解析请求到其他服务器。如果某个域名是这台名字服务器管理的， 那么这个NS的解析相应我们认为是权威的。（`authoritative`）
 
+### Zone file
+`zone file`区域档案是DNS服务器存储域名和IP映射记录的文本。一个`zone file`定义了一个dns域, 多个`zone file`通常用来定义一个域。每个文件中的记录称为资源记录（`resource record`）。
+`zone file`有两个指令需要注意， 一个是`$ORIGIN`参数设定， 代表了本NS管理的域。`$TTL`表示解析记录在缓存中默认过期时间。
+
+### DNS Record Types
+- `SOA Start Of Authority`, 每个区域文件的一条强制记录， 记录每个域的dns基本信息，具体包括：
+  - 这个区域的DNS server名称
+  - 这个区域的管理员
+  - 当前文件的版本
+  - 二级域名服务器重试、更新、过期信息的时间设置
+  - RR的TTL默认时间
+- `A` and `AAAA`. `A`把一个`host`映射到IPv4地址， `AAAA`映射到IPv6地址。
 
 ### Fully Qualified Domain Name(FQDN)
 按ICANN的标准FQDN是需要按`.`结尾的，虽然通常我们并没有这么做. 具体语法如下图所示
@@ -32,9 +44,9 @@ tags: cloud
 浏览器输入域名后， 从域名解析到实际的IP, 会走如下步骤：
 - 计算机先检查浏览器缓存是否存在， 如果是使用chrome, 可以在地址栏输入`chrome://net-internals/#dns`查看缓存信息。
 - 浏览器的缓存有一些限制， 比如缓存的条目数只有1000等等，所以如果不命中缓存， 那么就会查询本地hosts文件是否存在对应的ip。
-- 如果还是不中那么检查本地DNS服务器（服务器设置的DNS首选项）缓存是否命中。
-- 如果还是没有命中，那么就会查询DNS服务器。（后续还会根据IP是否在`zone file`，是否采取转发等不同设置， 向上级迭代查询），但是基本上是DNS服务器帮助用户做了和上层服务的交互。
-下图很好解释流整个dns解析流程, 不过我这里没有涉及上层的具体解释.
+- 如果还是不中那么检查本地设置的域名解析服务器`Resolving Name Servers`（`/etc/resolv.conf`设置的DNS首选项）缓存是否命中。
+- 如果还是没有命中，那么就会查询`Resolving Name Servers`(通常是ISP供应商提供)。后续还会往root服务器迭代查询， root服务器又会重定向到TLD服务器，TLD再重定向到`Domain-Level Name Servers`等等。 但是基本上是本地设置的DNS服务器帮助用户做了和上层服务的交互。
+下图很好解释流整个dns解析流程.
 ![http://p0iombi30.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-10-28%20%E4%B8%8B%E5%8D%887.51.42.png](http://p0iombi30.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-10-28%20%E4%B8%8B%E5%8D%887.51.42.png)
 
 
