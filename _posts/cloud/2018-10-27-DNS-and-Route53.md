@@ -10,14 +10,14 @@ tags: cloud
 ---
 
 ## DNS基本概念
-DNS(Domain Name Service)是人们使用英特网的基础服务，像一个电话本一样对应域名找到IP地址。`DNS`采用层级的结构， 不同层采用`.`来分层。顶层是root, 用一个`.`表示，后面就是TLD了。
+DNS(Domain Name Service)是人们使用英特网的基础服务，DNS提供的服务就像一个电话本一样, 计算机可以用它找到域名对应的IP地址。`DNS`采用层级的结构， 不同层采用`.`来分层。顶层是root, 用一个`.`表示，后面就是TLD了。
 `Top Level Domain`(TLD)顶级域名是域名中的最后一个部分， 比如`.com`. `Internet Corporation for Assigned Names and Numbers`(ICANN)
 负责管理和分配部分顶级域名， 这些顶级域名下可以再分配我们常见的域名，这些域名会在`Network Information Center`(InterNIC)注册， 每个域名会在一个叫`Whois`的数据库注册， 以维护域名的唯一性。
-这里有一个误区，域名如`example.com`, 一般所说的二级域名是应该是`example`(而国内的运营商叫做一级域名)， 其他的一次往后推.
+这里有一个误区，域名如`example.com`, 一般所说的二级域名是应该是`example`(而国内的运营商叫做一级域名, .com叫顶级域名)， 其他的二级域名/三级依次往后叫.
 
 ### host和Subdomain
 有了域名， 域名拥有者可以把自己的服务或主机定义成`host`, 比如大部分的web服务都可以通过`www`这个`host`访问。
-`TLD`是可以被按层级扩展成多个子域名的。如`example.com`中`example`就是`SLD`, 又如`baidu.com.cn`中`.com`是`SLD`. `SLD`和`host`主要的区别在于host定义的是一个资源，
+`TLD`是可以被按层级扩展成多个子域名的。如`example.com`中`example`就是`SLD`(Second-level domain), 又如`baidu.com.cn`中`.com`是`SLD`. `SLD`和`host`主要的区别在于host定义的是一个资源，
 而`SLD`是一个域名的扩展。不管是`SLD`还是`host`, 我们都从域名的左边读起， 可以看到越左边的部分意义越具体。
 
 ### Name Server
@@ -35,6 +35,10 @@ DNS(Domain Name Service)是人们使用英特网的基础服务，像一个电�
   - 二级域名服务器重试、更新、过期信息的时间设置
   - RR的TTL默认时间
 - `A` and `AAAA`. `A`把一个`host`映射到IPv4地址， `AAAA`映射到IPv6地址。
+- `CNAME` 别名.可以为你的`A`或者`AAAA`记录映射的服务取别名.
+- `MX`(Mail Exchange), 邮件交换主机记录. 此记录是用来宣告一个域底下哪一个`A`记录为专门负责邮件进出. 由于一个网域底下的`MX`记录可以超过一笔, 所以, 在众多`MX`记录里要排列出优先順序就必须倚靠`MX`记录里的另一项设定---`Preference`值, 值越小, 优先权越高, 最小的值为0. 同时`MX`不能指向`CNAME`.
+- `NS`(Name Server). 指定哪个`Name Server`可以得到某个域名的权威解析, 用于TLD顶级域名服务器解析会用到.
+- `PTR`(Pointer)反向解析, 把IP解析到域名.
 
 ### Fully Qualified Domain Name(FQDN)
 按ICANN的标准FQDN是需要按`.`结尾的，虽然通常我们并没有这么做. 具体语法如下图所示
