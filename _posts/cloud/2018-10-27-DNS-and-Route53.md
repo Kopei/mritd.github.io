@@ -64,11 +64,3 @@ Route53提供三个服务：域名注册，DNS服务，健康检查。
 5. 所有静态和动态内容使用CDN缓存。
 
 
-<style>
-.responsive-wrap iframe{ max-width: 100%;}
-</style>
-<div class="responsive-wrap">
-<!-- this is the embed code provided by Google -->
-  <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQ7isIT5w9ZVrlnF053pRcx3u9AuJoIGq4ngL7AXCnWcIEvbwuSadqClOWazb4dIt6wO4VU3q1lsKAq/embed?start=false&loop=true&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
-<!-- Google embed ends -->
-</div>
