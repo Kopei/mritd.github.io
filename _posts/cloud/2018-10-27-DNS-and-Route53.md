@@ -11,7 +11,7 @@ tags: cloud
 
 ## DNS基本概念
 DNS(Domain Name Service)是人们使用英特网的基础服务，像一个电话本一样对应域名找到IP地址。`DNS`采用层级的结构， 不同层采用`.`来分层。顶层是root, 用一个`.`表示，后面就是TLD了。
-`Top Level Domain`(TLD)顶级域名是域名中的最后一个部分， 比如`.com`. `Internet Corporation for Assigned Names and Numbers`(ICANN)
+`Top Level Domain`(TLD)顶级域名是域名中的最后一个部分， 比如`.com`. `TLD`又可以分为通用`TLD`和地域`TLD`如`.cn`. `Internet Corporation for Assigned Names and Numbers`(ICANN)
 负责管理和分配部分顶级域名， 这些顶级域名下可以再分配我们常见的域名，这些域名会在`Network Information Center`(InterNIC)注册， 每个域名会在一个叫`Whois`的数据库注册， 以维护域名的唯一性。
 这里有一个误区，域名如`example.com`, 一般所说的二级域名是应该是`example`(而国内的运营商叫做一级域名)， 其他的一次往后推.
 
@@ -49,10 +49,15 @@ DNS(Domain Name Service)是人们使用英特网的基础服务，像一个电�
 下图很好解释流整个dns解析流程.
 ![http://p0iombi30.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-10-28%20%E4%B8%8B%E5%8D%887.51.42.png](http://p0iombi30.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-10-28%20%E4%B8%8B%E5%8D%887.51.42.png)
 
+### Route53提供的服务
+Route53提供三个服务：域名注册，DNS服务，健康检查。
 
-
-
-
+### 使用Route53和其他服务提高系统韧性
+1. 每个区域有一个负载均衡器， 均衡器下的服务器分布在不同可用区。
+2. 每个可用区都需要是自动伸缩。
+3. 负载均衡器需要设置健康检查。
+4. 每个负载均衡器上面是Route53， Route53设置别名记录`alias record`指向每个负载均衡器， 同时设置路由规则采用最小延时规则， 开启每个均衡器的健康检查。
+5. 所有静态和动态内容使用CDN缓存。
 
 
 
