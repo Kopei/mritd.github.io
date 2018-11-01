@@ -62,3 +62,13 @@ Route53提供三个服务：域名注册，DNS服务，健康检查。
 3. 负载均衡器需要设置健康检查。
 4. 每个负载均衡器上面是Route53， Route53设置别名记录`alias record`指向每个负载均衡器， 同时设置路由规则采用最小延时规则， 开启每个均衡器的健康检查。
 5. 所有静态和动态内容使用CDN缓存。
+
+
+<style>
+.responsive-wrap iframe{ max-width: 100%;}
+</style>
+<div class="responsive-wrap">
+<!-- this is the embed code provided by Google -->
+  <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQ7isIT5w9ZVrlnF053pRcx3u9AuJoIGq4ngL7AXCnWcIEvbwuSadqClOWazb4dIt6wO4VU3q1lsKAq/pub?start=false&loop=true&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+<!-- Google embed ends -->
+</div>
