@@ -39,6 +39,7 @@ DNS(Domain Name Service)是人们使用英特网的基础服务，DNS提供的�
 - `MX`(Mail Exchange), 邮件交换主机记录. 此记录是用来宣告一个域底下哪一个`A`记录为专门负责邮件进出. 由于一个网域底下的`MX`记录可以超过一笔, 所以, 在众多`MX`记录里要排列出优先順序就必须倚靠`MX`记录里的另一项设定---`Preference`值, 值越小, 优先权越高, 最小的值为0. 同时`MX`不能指向`CNAME`.
 - `NS`(Name Server). 指定哪个`Name Server`可以得到某个域名的权威解析, 用于TLD顶级域名服务器解析会用到.
 - `PTR`(Pointer)反向解析, 把IP解析到域名.
+- aws还支持一种叫`alias`的record, 指向aws的某个公网服务。
 
 ### Fully Qualified Domain Name(FQDN)
 按ICANN的标准FQDN是需要按`.`结尾的，虽然通常我们并没有这么做. 具体语法如下图所示
