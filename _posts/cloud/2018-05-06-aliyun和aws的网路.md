@@ -38,8 +38,7 @@ tags: cloud
 - 只支持BGP路由协议
 
 ### aws LoadBalancer有三种类型： Classic, Network, Application LoadBalancer. 见下图：
-![https://s3.ap-southeast-1.amazonaws.com/kopei-public/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-05-06%20%E4%B8%8B%E5%8D%888.21.58.png](http://p0iombi30.b
-kt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-05-06%20%E4%B8%8B%E5%8D%888.21.58.png)
+![https://s3.ap-southeast-1.amazonaws.com/kopei-public/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-05-06%20%E4%B8%8B%E5%8D%888.21.58.png](https://s3.ap-southeast-1.amazonaws.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-05-06%20%E4%B8%8B%E5%8D%888.21.58.png)
 ![https://s3.ap-southeast-1.amazonaws.com/kopei-public/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-05-06%20%E4%B8%8B%E5%8D%888.37.46.png](https://s3.ap-southeast-1.amazonaws.com/kopei-public/%E5%B1%8F%E5%B9%95
 %E5%BF%AB%E7%85%A7%202018-05-06%20%E4%B8%8B%E5%8D%888.37.46.png)
 
