@@ -33,7 +33,7 @@ tags: mysql
 - Detection: 通过HA判断主备节点是否正常，能够排除网络抖动，30秒完成异常切换操作。
 - Repair: 维护主备节点的复制关系和修复。
 - Notice: 负责通知HA主备节点的状态变化。
- ![rds HA](http://p0iombi30.bkt.clouddn.com/rda%20ha.png)
+ ![rds HA](https://s3.ap-southeast-1.amazonaws.com/kopei-public/rda%20ha.png)
 - 多可用区可以承受机房级别的故障，多可用采用半同步复制方案，响应时间可能比单可用长。
 - 高可用策略：
   - rds有两个高可用策略，RTO(recovery time objective）和RPO(recovery point objective)

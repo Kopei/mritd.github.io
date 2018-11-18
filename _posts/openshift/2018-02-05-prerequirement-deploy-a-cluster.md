@@ -17,7 +17,7 @@ tags: kubernetes, openshift
 
 ### 系统配置需求
 - master，nodes, 外部etcd都有最小推荐配置. 大致上，master每1000pods需要额外1CPU和1.5GB内存。node的配置根据业务负载配置。
-![prerequirement](http://p0iombi30.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-02-05%20%E4%B8%8B%E5%8D%882.07.52.png)
+![prerequirement](https://s3.ap-southeast-1.amazonaws.com/kopei-public/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-02-05%20%E4%B8%8B%E5%8D%882.07.52.png)
 
 ### CPU核数配置
 master和node默认使用系统所有的CPU, 可以设置环境变量`GOMAXPROCS`限制核数。
@@ -58,7 +58,7 @@ $ dig master.example.com @10.64.33.1 +short
 ### 联通的网络
 - NetworkManager必须启用`NM_CONTROLLED=yes`，否则DNS配置会有问题。
 - m-m, m-n节点需要开通一些端口，单节点master和多节点master的开放端口也不同。 OpenShift会自动配置一些iptables规则。
-![port](http://p0iombi30.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-02-05%20%E4%B8%8B%E5%8D%882.07.52.png))
+![port](https://s3.ap-southeast-1.amazonaws.com/kopei-public/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-02-05%20%E4%B8%8B%E5%8D%882.07.52.png))
 
 ### 存储
 Openshift使用Kubernetes的持久卷[Persistent Volume](https://docs.openshift.org/latest/architecture/additional_concepts/storage.html#architecture-additional-concepts-storage)提供持久化存储。在安装Openshift完成后，可以根据具体需求，要求更多的存储资源。安装脚本里有提供相应的代码，支持的存储方式包括：`NFS, GlusterFS, Ceph RBD, OpenStack Cinder, AWS Elastic Block Store (EBS), GCE Persistent Disks, and iSCSI`.
@@ -70,7 +70,7 @@ Openshift使用Kubernetes的持久卷[Persistent Volume](https://docs.openshift.
 ansible-playbook  [-i /path/to/inventory] \
     ~/openshift-ansible/roles/openshift_facts/library/openshift_facts.py
 ```
-![http://p0iombi30.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-03-01%20%E4%B8%8A%E5%8D%8810.54.45.png](http://p0iombi30.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-03-01%20%E4%B8%8A%E5%8D%8810.54.45.png)
+![https://s3.ap-southeast-1.amazonaws.com/kopei-public/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-03-01%20%E4%B8%8A%E5%8D%8810.54.45.png](https://s3.ap-southeast-1.amazonaws.com/kopei-public/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-03-01%20%E4%B8%8A%E5%8D%8810.54.45.png)
 
 
 ### 如果安装容器化的GlusterFS,需要考虑额外的一些配置

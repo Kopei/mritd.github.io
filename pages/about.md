@@ -19,6 +19,6 @@ Let us relax!
 ---
 
 <audio  autoplay="autoplay">
-  <source src="http://p0iombi30.bkt.clouddn.com/48+-+%E5%8F%8D%E9%AB%98%E6%BD%AE.flac" type="audio/flac" />
+  <source src="https://s3.ap-southeast-1.amazonaws.com/kopei-public/48+-+%E5%8F%8D%E9%AB%98%E6%BD%AE.flac" type="audio/flac" />
 Your browser does not support the audio element.
 </audio>

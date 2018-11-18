@@ -43,7 +43,7 @@ DNS(Domain Name Service)是人们使用英特网的基础服务，DNS提供的�
 
 ### Fully Qualified Domain Name(FQDN)
 按ICANN的标准FQDN是需要按`.`结尾的，虽然通常我们并没有这么做. 具体语法如下图所示
-![http://p0iombi30.bkt.clouddn.com/fqdn-explained.jpg](http://p0iombi30.bkt.clouddn.com/fqdn-explained.jpg)
+![https://s3.ap-southeast-1.amazonaws.com/kopei-public/fqdn-explained.jpg](https://s3.ap-southeast-1.amazonaws.com/kopei-public/fqdn-explained.jpg)
 
 ### 浏览器解析DNS步骤
 浏览器输入域名后， 从域名解析到实际的IP, 会走如下步骤：
@@ -52,7 +52,7 @@ DNS(Domain Name Service)是人们使用英特网的基础服务，DNS提供的�
 - 如果还是不中那么检查本地设置的域名解析服务器`Resolving Name Servers`（`/etc/resolv.conf`设置的DNS首选项）缓存是否命中。
 - 如果还是没有命中，那么就会查询`Resolving Name Servers`(通常是ISP供应商提供)。后续还会往root服务器迭代查询， root服务器又会重定向到TLD服务器，TLD再重定向到`Domain-Level Name Servers`等等。 但是基本上是本地设置的DNS服务器帮助用户做了和上层服务的交互。
 下图很好解释流整个dns解析流程.
-![http://p0iombi30.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-10-28%20%E4%B8%8B%E5%8D%887.51.42.png](http://p0iombi30.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-10-28%20%E4%B8%8B%E5%8D%887.51.42.png)
+![https://s3.ap-southeast-1.amazonaws.com/kopei-public/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-10-28%20%E4%B8%8B%E5%8D%887.51.42.png](https://s3.ap-southeast-1.amazonaws.com/kopei-public/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-10-28%20%E4%B8%8B%E5%8D%887.51.42.png)
 
 ### Route53提供的服务
 Route53提供三个服务：域名注册，DNS服务，健康检查。

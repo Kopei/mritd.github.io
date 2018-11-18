@@ -86,7 +86,7 @@ spec:
 StatefulSets有一个唯一的identity，由有序的（由0开始分配给pod），稳定的网络标识符和稳定的存储组成。pod更换node也不会改变这个id。
 - 序号从0开始
 - 稳定的网络ID, StatefulSets中pod的主机名由`$(statefulset name)-$(ordinal)`规则组成，所以上述yml文件中，pods的名称分别web-0,web-1,web-2； 而StatefulSets的域名则为`$(service name).$(namespace).svc.cluster.local`；pod的域名则为`$(podname).$(governing service domain)`，`$(governing service domain)`是`serviceName`. 见下图：
-![http://p0iombi30.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-03-07%20%E4%B8%8B%E5%8D%883.31.13.png](http://p0iombi30.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-03-07%20%E4%B8%8B%E5%8D%883.31.13.png)
+![https://s3.ap-southeast-1.amazonaws.com/kopei-public/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-03-07%20%E4%B8%8B%E5%8D%883.31.13.png](https://s3.ap-southeast-1.amazonaws.com/kopei-public/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-03-07%20%E4%B8%8B%E5%8D%883.31.13.png)
 
 ## 更新StatefulSet
 1.7版本以后，StatefulSet控制器支持自动更新。更新策略取决于StatefulSet对象的`spec.updateStrategy`字段，这个功能可以用于更新容器镜像，

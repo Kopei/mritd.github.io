@@ -22,7 +22,7 @@ tags: big data
 
 ### Map/Reduce函数
 `Map/Reduce`是一种特殊(简单)的DAG. 图如下所示: 每个`map`函数把一组数据按key分为`key/value`对, 然后不同`key`的元素跑到不同的计算节点, 在那里进行`reduce`合并.
-![http://p0iombi30.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-10-14%20%E4%B8%8B%E5%8D%884.18.28.png](http://p0iombi30.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-10-14%20%E4%B8%8B%E5%8D%884.18.28.png)
+![https://s3.ap-southeast-1.amazonaws.com/kopei-public/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-10-14%20%E4%B8%8B%E5%8D%884.18.28.png](https://s3.ap-southeast-1.amazonaws.com/kopei-public/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-10-14%20%E4%B8%8B%E5%8D%884.18.28.png)
 ``` 
 map(input_records) {
 emit(k1, v1)
@@ -40,11 +40,11 @@ collect(key, aggregate)
 }
 ```
 可以有多个`map/reduce`组合替代一个并行的算法:
-![http://p0iombi30.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-10-14%20%E4%B8%8B%E5%8D%884.25.43.png](http://p0iombi30.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-10-14%20%E4%B8%8B%E5%8D%884.25.43.png)
+![https://s3.ap-southeast-1.amazonaws.com/kopei-public/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-10-14%20%E4%B8%8B%E5%8D%884.25.43.png](https://s3.ap-southeast-1.amazonaws.com/kopei-public/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-10-14%20%E4%B8%8B%E5%8D%884.25.43.png)
 
 ### 分布式文件系统(HDFS)
 Hadoop需要分布式文件系统, 用于处理大文件的顺序读写.每一个大文件会被分割成块, 存储在不同数据节点.
-![http://p0iombi30.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-10-14%20%E4%B8%8B%E5%8D%884.28.11.png](http://p0iombi30.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-10-14%20%E4%B8%8B%E5%8D%884.28.11.png)
+![https://s3.ap-southeast-1.amazonaws.com/kopei-public/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-10-14%20%E4%B8%8B%E5%8D%884.28.11.png](https://s3.ap-southeast-1.amazonaws.com/kopei-public/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-10-14%20%E4%B8%8B%E5%8D%884.28.11.png)
 主节点`NameNode`会记录所有文件的目录结构和各个块所在的位置. 主节点作为中心控制点一般会有`hot standby`的复制.
 
 想要读取文件, 客户端会计算所需块在文件的偏移位置, 得出块的索引, 然后对`NameNode`做出请求, 然后`NameNode`会返回哪个`DataNode`有数据, 客户端就会直接和`DataNode`联系.
