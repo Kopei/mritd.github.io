@@ -17,7 +17,7 @@ DNS(Domain Name Service)是人们使用英特网的基础服务，DNS提供的�
 
 ### host和Subdomain
 有了域名， 域名拥有者可以把自己的服务或主机定义成`host`, 比如大部分的web服务都可以通过`www`这个`host`访问。
-`TLD`是可以被按层级扩展成多个子域名的。如`example.com`中`example`就是`SLD`(Second-level domain), 又如`baidu.com.cn`中`.com`是`SLD`. `SLD`和`host`主要的区别在于host定义的是一个资源，
+`TLD`是可以被按层级扩展成多个子域名的。如`example.com`中`example`就是`SLD`(Second-level domain), 又如`sina.com.cn`中`.com`是`SLD`. `SLD`和`host`主要的区别在于host定义的是一个资源，
 而`SLD`是一个域名的扩展。不管是`SLD`还是`host`, 我们都从域名的左边读起， 可以看到越左边的部分意义越具体。
 
 ### Name Server
