@@ -49,7 +49,7 @@ DNS(Domain Name Service)是人们使用英特网的基础服务，DNS提供的�
 浏览器输入域名后， 从域名解析到实际的IP, 会走如下步骤：
 - 计算机先检查浏览器缓存是否存在， 如果是使用chrome, 可以在地址栏输入`chrome://net-internals/#dns`查看缓存信息。
 - 浏览器的缓存有一些限制， 比如缓存的条目数只有1000等等，所以如果不命中缓存， 那么就会查询本地hosts文件是否存在对应的ip。
-- 如果还是不中那么检查本地设置的域名解析服务器`Resolving Name Servers`（`/etc/resolv.conf`设置的DNS首选项）缓存是否命中。
+- 如果还是不中那么检查服务器端设置的域名解析服务器`Resolving Name Servers`（`/etc/resolv.conf`设置的DNS首选项）缓存是否命中。
 - 如果还是没有命中，那么就会查询`Resolving Name Servers`(通常是ISP供应商提供)。后续还会往root服务器迭代查询， root服务器又会重定向到TLD服务器，TLD再重定向到`Domain-Level Name Servers`等等。 但是基本上是本地设置的DNS服务器帮助用户做了和上层服务的交互。
 下图很好解释流整个dns解析流程.
 ![https://s3.ap-southeast-1.amazonaws.com/kopei-public/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-10-28%20%E4%B8%8B%E5%8D%887.51.42.png](https://s3.ap-southeast-1.amazonaws.com/kopei-public/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-10-28%20%E4%B8%8B%E5%8D%887.51.42.png)
