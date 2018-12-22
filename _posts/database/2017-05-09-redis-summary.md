@@ -46,6 +46,7 @@ Redis内部还存在自动触发RDB的持久化机制，例如以下场景：
 - 如果从节点执行全量复制操作，主节点自动执行bgsave生成RDB文件并发送给从节点
 - 执行debug reload命令重新加载Redis时，也会自动触发save操作。
 - 默认情况下执行shutdown命令时，如果没有开启AOF持久化功能则自动执行bgsave。
+
 AOF（append only file）持久化：以独立日志的方式记录每次**写**命令在`buffer`,然后通过某种机制`fsync`到硬盘，日志的格式与客户端发给`Redis`的网络文本一样.重启时再重新执行AOF文件中的命令达到恢复数据的目的。AOF的主要作用是解决了数据持久化的实时性.
 AOF的工作流程操作：命令写入（append）、文件同步（sync）、文件重写（rewrite）、重启加载（load）.在进行AOF重写工作的时候, `redis`也会fork一个子进程,由子进程进行文件重写, 主进程继续处理新的请求并将新的aof写入`aof_rewrite_buffer`, 在子进程完成重写工作后将`aof_rewrite_buffer`和新的`aof`合并,形成最终的`aof`文件.
 现在主流redis持久化是使用AOF, 但是为了更加快速可以两种技术混合使用.
