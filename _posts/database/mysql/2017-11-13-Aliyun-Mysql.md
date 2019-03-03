@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Aliyun RDS for Mysql
-categories: [mysql]
+categories: [database]
 description:
 keywords: mysql
 catalog: true

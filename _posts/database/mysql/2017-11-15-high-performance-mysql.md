@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 高性能mysql笔记
-categories: [mysql]
+categories: [database]
 description:
 keywords: mysql
 catalog: true
@@ -42,16 +42,16 @@ tags: mysql
 ### MVCC(Multi-Version concurrent control)
 - 实现机制： 基于某个时间点的快照。非阻塞度，行锁写
 - InnoDB在每个行记录后面保存两个隐藏的列(时间上根据mysql版本不同，有更多的隐藏列, 5.7是3个字段）， 一个行的创建时间，一个是过期时间。时间都是系统版本号。
-- 在repeartable read隔离等级下， mvcc的操作：
-  - select:
-  1. 只会查到当前事务版本号前面或等于当前版本号（事务修改过）的行。
-  2. 删除的行也会作比较。
-  - insert:
-  1. 插入一条数据，加2个隐藏的列
-  - delete:
-  1. 删除一行，在删除列加入当前系统版本
-  - update:
-  1. 插入一条新的记录，把老的记录删除行更新系统版本。
+- 在repeartable read隔离等级下， mvcc的操作:
+  - select:
+    只会查到当前事务版本号前面或等于当前版本号（事务修改过）的行。
+    删除的行也会作比较。
+  - insert:
+    插入一条数据，加2个隐藏的列
+  - delete:
+    删除一行，在删除列加入当前系统版本
+  - update:
+    插入一条新的记录，把老的记录删除行更新系统版本。
  
 ### InnoDB
 - 它是被设计为处理大量短时事务。
