@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Grid and Flex design
+title: Grid and Flex Design
 categories: [frontend]
 description: a short summary about grid and flex design
 keywords: grid, flex
@@ -11,8 +11,8 @@ tags: frontend
 
 ## Flex Background Summary
 `Flexbox layout`布局主要提供了一种为容器(`container`)中项目(`item`)布局, 对齐和分布空间的方式. 这种`flex`的布局方式可以不需要知道空间的大小或者动态改变大小.
-`Flex`主要的想法是给容器能够灵活地改变容器内的项目的高度/宽度/排序, 使其能适应当前的空间.一个`flex`的容器能够把它的项目扩展到多余的空间, 或者收缩大小防止屏幕变下时项目溢出.
-`Floxbox`的布局和传统的布局不同, 它不固定排列的方向.(block基于垂直方向, inline基于水平方向)
+`Flex`主要的想法是给容器能够灵活地改变容器内项目的高度/宽度/排序, 使其能适应当前的空间.一个`flex`的容器能够把它的项目扩展到多余的空间, 或者收缩大小防止屏幕变小时项目溢出.
+`Floxbox`的布局和传统的布局不同, 它不固定排列的方向(而block基于垂直方向, inline基于水平方向).
 `Flowbox`布局比较适合组件和小型布局, 而`Grid`适合更大的布局.
 
 ## Grid Background Summary
