@@ -17,6 +17,7 @@ tags: frontend
 import {InMemoryCache} from 'apollo-client-inmemory';
 const cache = new InMemoryCache();
 ```
+
 `InMemoryCache`的构造器可以有如下配置:
 - `addTypename: boolean`是否需要在`document`中添加__typename, 默认为true.
 - `dataIdFromObject`, 由于`InMemoryCache`是会`normalize`数据再存入`store`, 具体做的是先把数据分成一个个对象, 然后给每个对象创建一个全局标识符`_id`, 然后把这些对象以一种扁平的数据格式存储. 默认情况下, `InMemoryCache`会找到`__typename`和边上主键`id`值作为标识符`_id`的值. 如果`id`或者`__typename`没有指定, 那么`InMemoryCache`会`fall back`查询`query`的对象路径. **但是我们也可以使用`dataIdFromObject`来自定义对象的唯一表示符: 
