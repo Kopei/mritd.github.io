@@ -59,4 +59,4 @@ mutation {
     }
 }
 ```
-如果保持这个`id`匹配, 每次更新都会自定更新`data store`中`score`字段的数据, 如果query有多个字段, 那么mutation的结果数据尽量要能更新前一次的query, 以利用上诉特点保持cache的数据鲜活.
+如果保持这个`id`匹配, 每次更新都会自定更新`data store`中`score`字段的数据, 如果query有多个字段, 那么mutation的结果数据尽量保持更新前一次的query的数据一致, 以利用上诉特点保持cache的数据鲜活.
