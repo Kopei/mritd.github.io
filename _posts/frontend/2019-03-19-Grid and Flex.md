@@ -20,8 +20,8 @@ tags: frontend
 `implicit grid and explicit grid`隐含和显式网格, 隐含网格指网格项目多出来或者网格项目布局在显式网格外面的情况.
 
 ### Grid属性表
-```
 Grid 容器的属性:
+```
 display: grid|inline-grid;
 grid-template-columns: <track-size> ... | <line-name> <track-size> ...;
 grid-template-rows: <track-size> ... | <line-name> <track-size> ...;
@@ -42,8 +42,9 @@ grid-auto-columns: <track-size> ...;
 grid-auto-rows: <track-size> ...;
 grid-auto-flow: row|column|row dense|column dense;
 grid: <grid-template> | <grid-template-rows> / [ auto-flow && dense? ] <grid-auto-columns>? | [ auto-flow && dense? ] <grid-auto-rows>? / <grid-template-columns>
-
+```
 Grid 项目的属性:
+```
 grid-column-start: <number>|<name>|span <number>|span <name>|auto
 grid-column-end: <number> | <name> |span <number> | span <name> |auto
 grid-row-start: <number> | <name> |span <number> | span <name> |auto
