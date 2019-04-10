@@ -8,4 +8,3 @@ menu: 链接
 permalink: /links/
 ---
 
-> 一些朋友,一些往事......
