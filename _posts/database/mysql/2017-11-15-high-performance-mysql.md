@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 高性能mysql笔记
-categories: [mysql]
+categories: [database]
 description:
 keywords: mysql
 catalog: true
@@ -9,14 +9,27 @@ multilingual: false
 tags: mysql
 ---
 
-## 此笔记只针对mysql5.5
+### sql执行大致流程
+- 客户端发送一条查询给服务器。
+- 服务器先检查查询缓存，如果命中了缓存，则立刻返回存储在缓存中的结果。否则进入下一阶段。
+- 服务器端进行SQL解析、预处理，再由优化器生成对应的执行计划。
+- MySQL根据优化器生成的执行计划，再调用存储引擎的API来执行查询。
+- 将结果返回给客户端。
 
 ### mysql的架构
-- mysql采用存储和处理分离的架构。
+- mysql采用存储和计算分离的架构, 是一个典型的单进程多线程模型数据库.
 - mysql可以开启线程池，处理客户端的请求。
 - select语句会在缓存中先查找，没有hit才会到解释器。
 - 解释器创建内部数据结构并做优化，最后才到存储器API。优化决策时用户可以使用hint关键字来影响mysql的决策过程，也可能使用explain来看看mysql是怎么决策的。
 - 优化器会查询存储引擎提供一些信息来帮助优化。
+![https://s3.ap-southeast-1.amazonaws.com/kopei-public/screen_shot%202019-01-08%20at%2021.26.22.png](https://s3.ap-southeast-1.amazonaws.com/kopei-public/screen_shot%202019-01-08%20at%2021.26.22.png)
+
+### 启动一个mysql实例
+一般命令行启动mysql需要指定`basedir`, `datadir`, `user`, `log-error`, `pid-file`, `socket`等参数, `basedir`下面放置项目二进制可执行文件和库文件,pid文件和socket等文件. `datadir`目录下放置server log文件, innodb相关文件, 数据文件如`.ibd`数据和索引文件, `.frm`对象结构文件等.
+```bash
+/usr/local/mysql/libexec/mysqld --basedir=/usr/local/mysql --datadir=/usr/local/mysql/var --user=mysql --log-error=error.log \
+--pid-file=/usr/local/mysql/var/mysql.pid --socket=/tmp/mysql.sock --port=3306
+```
 
 ### mysql的并发控制
 - mysql在服务层和存储层都做了并发控制， 一般使用锁来控制并发。
@@ -29,16 +42,17 @@ tags: mysql
 ### MVCC(Multi-Version concurrent control)
 - 实现机制： 基于某个时间点的快照。非阻塞度，行锁写
 - InnoDB在每个行记录后面保存两个隐藏的列(时间上根据mysql版本不同，有更多的隐藏列, 5.7是3个字段）， 一个行的创建时间，一个是过期时间。时间都是系统版本号。
-- 在repeartable read隔离等级下， mvcc的操作：
-  - select:
-  1. 只会查到当前事务版本号前面或等于当前版本号（事务修改过）的行。
-  2. 删除的行也会作比较。
-  - insert:
-  1. 插入一条数据，加2个隐藏的列
-  - delete:
-  1. 删除一行，在删除列加入当前系统版本
-  - update:
-  1. 插入一条新的记录，把老的记录删除行更新系统版本。
+- 在repeartable read隔离等级下， mvcc的操作:
+  - select:
+    只会查到当前事务版本号前面或等于当前版本号（事务修改过）的行。
+    删除的行也会作比较。
+  - insert:
+    插入一条数据，加2个隐藏的列
+  - delete:
+    删除一行，在删除列加入当前系统版本
+  - update:
+    插入一条新的记录，把老的记录删除行更新系统版本。
+ 
 ### InnoDB
 - 它是被设计为处理大量短时事务。
 - 使用next-key locking实现防止幻读。
@@ -47,9 +61,23 @@ tags: mysql
 - 需要格外小心事务中混合了事务型和非事务型表
 
 ### ACID是一个事务的标准特征
-- mysql主要关心两个隔离等级，Read commited 和 repeatable read。 read commited也是nonrepeatable read, 一个事务在commit之前对其他事务都是不可见的。
+- mysql主要关心两个隔离等级，`Read committed`和`repeatable read`。 `read committed`也是`nonrepeatable read`. 
 repeatable read是mysql默认隔离等级，保证同一个事务多次读取同样记录结果一致。
+- InnoDB使用不同`locking strategy`来实现不同隔离等级.
 - 在多个事务里可能出现死锁现象, innoDB处理的方式是将最少行级排它锁进行回滚。
+
+### 隔离等级下的幻读和脏读
+假设有一张表: t_1(id primary key, name) 有三条数据.
+幻读现象会在这种情况出现, A事务先执行:
+```select * from t_1 where id=4```
+然后B事务执行
+```insert into t_1 values (4, 'Hanny')```
+**如果此时隔离等级是`read committed`**,那么事务A再执行`select * from t_1 where id=4`就会读到这条数据, 出现所谓的**幻读**. 如果此时的隔离等级是`repeatable read`那么A事务再执行select将不会读到`id=4`的数据.
+脏读现象出现在A事务读取了B事务未提交的更新, 如A事务`start transaction; insert into t_1 values (4, 'hanny')`, B事务`select * from t_1 where id=4`读到了数据, 就是脏读. 这种情况一般出现在隔离等级在`read uncommitted`的时候.
+
+### 和隔离等级密切相关的各种锁(V5.7)
+- `record lock`记录锁, `select ... lock in share mode/select ... for update`会加记录锁, 锁定的这行不能被另一个事务做`insert, update, delete`. 记录锁会锁定有索引的记录, 如果表没有定义索引, innodb会隐含创建`hidden clustered index`. 在`RR`隔离等级下, `select ... lock in share mode/select ... for update`加上where唯一索引作为唯一查询条件, 可以实现`RR`.
+- 
 
 ### 使用事务日志可以提高存储引擎修改表数据效率
 - 做法类似redis, 仅仅持久化事务日志，在内存中更新数据，然后后台再慢慢写入磁盘。

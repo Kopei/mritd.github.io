@@ -1,7 +1,7 @@
 ---
 layout: post
 title: OceanDB小结
-categories: [db]
+categories: [database]
 description: 
 keywords: oceanDB, aliyun
 catalog: true
