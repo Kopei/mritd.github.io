@@ -10,10 +10,10 @@ tags: React, hooks
 ---
 
 ## React无状态组件
-React的`Component`分为有状态的`class component`和无状态的`function component`, `class component`的好处是可以完全控制组件的生命周期, 坏处是写起来麻烦. `function component`的好处是可以使用高阶函数式的编程方式编写代码, 缺点是没有状态可以控制.所以一般需要状态初始化或者其他一些状态操控时, 以前可以用[recompose](https://github.com/acdlite/recompose), 使用HOC让组件带有状态, 但是后来这个库的作者加入了React团队, v16.8版本后, 我们应该使用`Hooks`来管理组件状态和生命周期.
+React的`Component`分为有状态的`class component`和无状态的`function component`, `class component`的好处是可以完全控制组件的生命周期, 坏处是写起来麻烦. `function component`的好处是可以使用高阶函数式的编程方式编写代码, 缺点是没有状态可以控制.所以一般需要状态初始化或者其他一些状态操控时, 以前可以用[recompose](https://github.com/acdlite/recompose), 使用HOC让组件带有状态, 但是后来这个库的作者加入了React团队, v16.8版本后, 我们应该使用[Hooks](https://reactjs.org/docs/hooks-overview.html)来管理组件状态和生命周期.
 
 ### recompose和hooks写法对比
-使用recompose给组件设置状态及其他类似`componentDidMount`的功能时, 需要先定义好相应的状态和函数, 然后compose进组件:
+使用recompose给组件设置状态及其他类似`componentDidMount`的功能时, 需要先定义好相应的状态和生命周期函数, 然后compose进组件:
 ```javascript
 const { Component } = React;
 const { compose, lifecycle, branch, renderComponent } = Recompose;
@@ -40,8 +40,8 @@ const App = () =>
   </div>;
 ```
 而如果使用`Hooks`那么改写起来方便一点.
-```javascript 1.8
-import React, {useState, useEffect}
+```javascript
+import React, {useState, useEffect} from 'react'
 const User = ({name, statue}) =>{
     const [loading, toggleLoading] = useState(true); //set default loading=true
     useEffect( () =>{
