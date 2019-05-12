@@ -68,7 +68,7 @@ selection是不可变的`immutable`, 但是元素是可变的.
   `update`和`enter`的selections以数据的顺序返回, 而`exit`selection保留原来的selection顺序.
   如果`data`方法不传入参数, 方法返回选中元素的数据数组.
   
-- `selection.join(enter[,update][,exit])`: 以绑定的数据做对应的增加/移除/排序, 返回**合并**的`enter`/`update`selection. 想要更加颗粒度地控制join中的是三个操作, 可以显式地传入`enter, update, exit`来控制元素:
+- `selection.join(enter[,update][,exit])`: 给绑定的数据做对应的增加/移除/排序元素操作, 返回**合并**的`enter`/`update`selection. 想要更加颗粒度地控制join中的是三个操作, 可以显式地传入`enter, update, exit`方法来控制元素:
   ```javascript 
   svg.selectAll("circle")
   .data(data)
@@ -79,9 +79,9 @@ selection是不可变的`immutable`, 但是元素是可变的.
     .attr("stroke", "black");
   ```
 
-- `selection.enter()`: 返回`enter`selection. 什么是`enter`selection呢? 其实就是预留位置给予即将使用多余数据生成的新元素.首先`enter()`函数的作用是给数据多于元素时让dom预留位置, 在使用`data()`函数后, 当前selection对象会增加`_enter`和`_exit`属性,
+- `selection.enter()`: 返回`enter selection`. 什么是`enter selection`呢? 其实就是数据多于元素的情况下, 需要预留位置新给元素.而这个预留的`palceholder`就是返回值. 在使用`data()`函数后, 当前selection对象会增加`_enter`和`_exit`属性,
 ![https://s3.ap-southeast-1.amazonaws.com/kopei-public/screen_shot%202019-04-22%20at%2013.54.46.png](https://s3.ap-southeast-1.amazonaws.com/kopei-public/screen_shot%202019-04-22%20at%2013.54.46.png)
-如上图所示, 绑定数据后,`_enter`的值是`EnterNode`数组, 这时候使用`enter()`就会进入`_enter`属性(就是返回`enter`selection了), 把还没有找到DOM的数据找出来用于`append()`生成最终需要生成的DOM.如下图所示, 调用`append`后,最终要多余生成的`rect`就生成了.
+如上图所示, 绑定数据后,`_enter`的值是`EnterNode`数组, 这时候使用`enter()`就会进入`_enter`属性(就是返回`enter selection`了), 把还没有找到DOM的数据找出来调用`append()`生成最终需要生成的DOM.如下图所示, 调用`append`后,最终要多余生成的`rect`就生成了.
 ![https://s3.ap-southeast-1.amazonaws.com/kopei-public/screen_shot%202019-04-22%20at%2014.00.17.png](https://s3.ap-southeast-1.amazonaws.com/kopei-public/screen_shot%202019-04-22%20at%2014.00.17.png)
 
 - `selection.exit()`: 返回`exit`selection, 就是返回那些没有数据可以再绑定的元素.
