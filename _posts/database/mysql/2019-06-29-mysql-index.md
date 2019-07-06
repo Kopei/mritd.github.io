@@ -36,7 +36,7 @@ mysql会用索引做如下操作:
 每个存储引擎的定义了每张表的索引最大值和最大长度. 基本上, 所有存储引擎至少支持16个索引和单个索引256字节以上.
 
 #### TEXT/BLOB的索引
-`Index Prefixes`指创建索引时, 可以指定这个字段的开头一部分N个字节作为索引, 这样索引的长度将被限制, 特别适用于TEXT/BLOB这样没有长度的字段上.
+`Index Prefixes`指在文本类型上创建索引时, 可以指定这个字段的开头一部分N个字节作为索引, 这样索引的长度将被限制, 特别适用于TEXT/BLOB这样没有长度的字段上.
 ```sql
 create table test (blob_col BLOB, index(blob_col(10)))
 ```
@@ -44,4 +44,46 @@ create table test (blob_col BLOB, index(blob_col(10)))
 
 
 ### 多列索引
+mysql可以在多个列上创建索引. 一个索引最多可以有16个列组成.
+使用多列作为索引查询时, mysql可以检查索引中的所有列, 也可以只检查第一个列, 头二个列, 或头三个列.所以正确的定义复合索引的顺序可以加速好几种查询.
+一个多列索引可以被当成是一个排序的数组, 索引的值是多个列的值`CONCAT`后的hash, 等同于没有多列索引时, 自己创建一个hash几个列值的字段, 这样就可以快速查询:
+```sql
+select * from table where hash_col=MD5(CONCAT(val1, val2))
+and col1=val1 and col2=val2;
+```
+
+假设有如下表:
+```sql
+create table test (
+  id int not null,
+  last_name char(30) not null,
+  first_name char(30) not null,
+  primary key(id),
+  index name (last_name, first_name)
+);
+```
+`name`索引是`last_name`和`first_name`的组合索引. 所以各种`last_name`和`first_name`的组合查询都可以使用到索引. 但是只有`last_name`可以作为单独查询条件, 因为只有最左边的索引值才能被优化器(`optimizer`)使用. 索引如下都是会使用到索引:
+```sql
+select * from test where last_name = 'Widenius';
+
+select * from test where last_name = 'Widenius' and first_name='Micheal';
+
+select * from test where last_name = 'Widenius' and first_name >= 'M' and first_name < 'N';
+
+select * from test where last_name = 'Widenius' and (first_name = 'Micheal' or first_name='Monty');
+```
+但是如下查询是不会使用到`name`索引的:
+```sql
+select * from test where first_name='Micheal';
+
+select * from test where last_name='Widenius' or first_name = 'Micheal';
+```
+
+#### 单列索引和多列索引的区别
+假设有如下查询:
+```sql
+select * from table_name where col1=val1 and col2=val2;
+```
+如果有一个由col1和col2组成的多列索引, 那么满足条件的行会快速被找到. 那么如果col1和col2分别采用单列索引那么优化器将会尝试合并索引,或者使用单个索引, 具体使用哪个索引取决于哪个索引能够排除更多的行.
+
 
