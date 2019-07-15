@@ -12,6 +12,11 @@ layout: default
           <span class="meta-info">
             <span class="octicon octicon-calendar"></span> {{ page.date | date: "%Y/%m/%d" }}
           </span>
+          {% if page.updated_at %}
+          <span class="meta-info">
+            <span class="octicon octicon-calendar"></span> {{ page.updated_at | date: "%Y/%m/%d" }}
+          </span>
+          {% endif %}
           {% endif %}
           {% for cat in page.categories %}
           <span class="meta-info">

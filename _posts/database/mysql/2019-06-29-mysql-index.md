@@ -8,6 +8,7 @@ keywords: mysql
 catalog: true
 multilingual: false
 tags: mysql
+updated_at: 2019-07-15 8:30:00 +0000
 ---
 
 ## mysql索引的作用和意义
