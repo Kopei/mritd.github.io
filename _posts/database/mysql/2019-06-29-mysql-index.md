@@ -15,7 +15,7 @@ updated_at: 2019-07-15 8:30:00 +0000
 当我们使用sql语句查询时往往要加where, 使用索引我们可以快速查找到满足where条件的行. 
 
 ### mysql如何使用索引
-mysql大部分索引使用B-tree, 列如(PRIMARY KEY, UNIQUE, INDEX, FULLTEXT); 空间数据类型使用R-tree; 内存表还支持hash索引, InnoDB使用反向列表(inverted list)作为FULLTEXT的索引.
+mysql大部分索引使用B-tree, 例如(PRIMARY KEY, UNIQUE, INDEX, FULLTEXT); 空间数据类型使用R-tree; 内存表还支持hash索引, InnoDB使用反向列表(inverted list)作为FULLTEXT的索引.
 
 mysql会在做如下操作时用到索引:
 - 使用索引快速找到满足where条件语句的行.
@@ -45,8 +45,8 @@ create table test (blob_col BLOB, index(blob_col(10)))
 
 
 ### 多列索引
-mysql可以在多个列上创建索引. 一个索引最多可以有16个列组成.
-使用多列作为索引查询时, mysql可以检查索引中的所有列, 也可以只检查第一个列, 头二个列, 或头三个列.所以正确的定义复合索引的顺序可以加速好几种查询.
+mysql可以在多个列上创建索引. 一个索引最多可以有16个列组成. 使用多列索引的好处是你只需要创建一个索引,就可以享受到多个查询条件快速命中的优点.
+使用多列作为索引查询时, mysql可以检查索引中的所有列, 也可以只检查第一个列, 头二个列, 或头三个列.所以正确的定义复合索引的顺序可以加速好几种情况的查询.
 一个多列索引可以被当成是一个排序的数组, 索引的值是多个列的值`CONCAT`后的hash, 等同于没有多列索引时, 自己创建一个hash几个列值的字段, 这样就可以快速查询:
 ```sql
 select * from table where hash_col=MD5(CONCAT(val1, val2))
@@ -87,4 +87,8 @@ select * from table_name where col1=val1 and col2=val2;
 ```
 如果有一个由col1和col2组成的多列索引, 那么满足条件的行会快速被找到. 那么如果col1和col2分别采用单列索引那么优化器将会尝试合并索引,或者使用单个索引, 具体使用哪个索引取决于哪个索引能够排除更多的行.
 
+#### 多列索引最左列优化
+多列索引中最左列会被优化器用于快速查找行, 假设有一个三列索引(col1, col2, col3), 那么(col1), (col1, col2)和(col1, col2, col3)这样的查询组合将会使用到索引.
 
+### 检查索引的使用正确性
+使用`explain`查看sql语句的执行计划, 可以了解索引是否被正确使用. 如果怀疑优化器没有按最佳的执行计划执行语句, 可以`ANALYZE TABLE`更新表的统计.
