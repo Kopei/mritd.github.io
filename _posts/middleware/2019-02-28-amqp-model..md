@@ -7,6 +7,7 @@ keywords: rabbitmq
 catalog: true
 multilingual: false
 tags: rabbitmq,amqp
+updated_at: 2019-08-04 18:30:00 +0000
 ---
 
 ## AMQP-0-9-1模型
