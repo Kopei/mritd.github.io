@@ -16,13 +16,13 @@ tags: big data
 
 我们知道多线程编程的局限在于访问共享资源的竞争问题, 一般需要锁, 信号量(semaphore)等技术去协调, 不然死锁等问题将会出现.
 
-但是我们可以完全换个思路, 比如消除需要访问共享资源的限制, 这样我们就不需要锁之类的技术了.这也是函数计算的一个基本概念. 数据通过函数的参数传递, 同一时间只有一个激活的函数运行,这样就避免了冲突.
+但是我们可以完全换个思路, 比如消除需要访问共享资源的限制, 这样我们就不需要锁之类的技术了.这也是函数计算的一个基本概念. **数据通过函数的参数传递**, 同一时间只有一个激活的函数运行,这样就避免了冲突.
 
 可以把函数连接作有向无环图`Direct Acylic Graph`, 由于函数没有隐藏的依赖, 这样多个DAG就可以并行运行.
 
 ### Map/Reduce函数
 `Map/Reduce`是一种特殊(简单)的DAG. 图如下所示: 每个`map`函数把一组数据按key分为`key/value`对, 然后不同`key`的元素跑到不同的计算节点, 在那里进行`reduce`合并.
-![https://s3.ap-southeast-1.amazonaws.com/kopei-public/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-10-14%20%E4%B8%8B%E5%8D%884.18.28.png](https://s3.ap-southeast-1.amazonaws.com/kopei-public/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-10-14%20%E4%B8%8B%E5%8D%884.18.28.png)
+![https://imgur.com/YrZrBZN]
 ``` 
 map(input_records) {
 emit(k1, v1)
