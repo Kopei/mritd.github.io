@@ -10,7 +10,7 @@ tags: big data
 ---
 
 ## Apache Arrow in PySpark
-Spark可以使用`Apache Arrow`对python和jvm之间的数据进行传输， 这样会比默认传输更加高效。
+Spark可以使用`Apache Arrow`对python和jvm之间的数据进行传输， 这样会比默认传输方式更加高效。
 为了能高效地利用特性和保障兼容性，使用的时候可能需要一点点修改或者配置。
 
 
@@ -185,9 +185,22 @@ DataFrame[id: bigint, v: double]
 |  2|10.0|5.666666666666667|
 +---+----+-----------------+
 ```
-
+## 为什么普通的python UDF慢?
+普通的python udf需要经过如下步骤来和jvm交互：
+- jvm中一条数据序列化
+- 序列化的数据发送到python进程
+- 记录被python反序列化
+- 记录被python处理
+- 结果被python序列化
+- 结果被发送到jvm
+- jvm反序列化并存储结果到dataframe
+所以python udf会比java和scala原生的udf慢。
+但是使用pandas udf可以克服数据传输中需要的序列化问题，关键是使用了Arrow. spark使用arrow把JVM中的Dataframe转为可共享的buffer, 然后python也可以把这块共享buffer作为pandas的dataframe, 所以python可以直接在共享内存上操作。
+以上，我们总结一下，使用arrow主要有两个好处：
+1. 不在需要python和jvm序列化和反序列化数据。因为直接使用了共享内存
+2. pandas有很多使用c实现的方法， 可以直接使用。
 ## Spark的Pandas函数API
-普通pandas的函数可以直接应用于在Spark的DataFrame上， 使用`applyInPandas`函数。
+普通pandas的函数可以直接应用于在Spark的DataFrame上， 使用`applyInPandas`或者`mapInPandas`函数。
 
 ### Grouped Map api
 Spark的dataframe在`groupby`后使用普通的pandas函数， 如`df.groupby().applyInPandas(func, schema))`， 普通的pandas函数需要输入时pandas dataframe, 返回普通的pandas dataframe. 上面这写法会把每个分组映射到pandas dataframe.
