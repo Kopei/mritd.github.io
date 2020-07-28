@@ -1,9 +1,9 @@
 ---
 layout: post
-title: PySpark for pandas
+title: Pandas UDF and Function Api in Spark
 categories: [big data]
 description: 官方文档解读
-keywords: spark, pandas
+keywords: spark, pandas, arrow
 catalog: true
 multilingual: false
 tags: big data
@@ -13,6 +13,21 @@ tags: big data
 Spark可以使用`Apache Arrow`对python和jvm之间的数据进行传输， 这样会比默认传输方式更加高效。
 为了能高效地利用特性和保障兼容性，使用的时候可能需要一点点修改或者配置。
 
+## 为什么使用Arrow作为数据交换中介能够提升性能？
+普通的python udf需要经过如下步骤来和jvm交互：
+- jvm中一条数据序列化
+- 序列化的数据发送到python进程
+- 记录被python反序列化
+- 记录被python处理
+- 结果被python序列化
+- 结果被发送到jvm
+- jvm反序列化并存储结果到dataframe
+
+所以python udf会比java和scala原生的udf慢。
+但是使用pandas udf可以克服数据传输中需要的序列化问题，关键是使用了Arrow. spark使用arrow把JVM中的Dataframe转为可共享的buffer, 然后python也可以把这块共享buffer作为pandas的dataframe, 所以python可以直接在共享内存上操作。
+以上，我们总结一下，使用arrow主要有两个好处：
+1. 因为直接使用了共享内存，不在需要python和jvm序列化和反序列化数据。
+2. pandas有很多使用c实现的方法， 可以直接使用。
 
 ## Spark DataFrame和Pandas DataFrame的转化
 首先需要配置spark, 设置`spark.sql.execution.arrow.pyspark.enabled`, 默认这个选项是不打开的。
@@ -29,11 +44,11 @@ pdf = pd.DataFrame(np.random.rand(100,3))
 df = spark.createDataFrame(pdf)
 
 # 使用arrow把spark df转化为pandas df
-result_pdf = df.select(*).toPandas()
+result_pdf = df.select("*").toPandas()
 ```
 
 ## Pandas UDF(矢量UDF)
-`Pandas UDF`是用户定义的函数， Spark是用arrow传输数据和pandas来运行`pandas UDF`， `pandas UDF`使用向量计算，相比于旧版本的`row-at-a-time`python udf, 最多增加100倍的性能. 使用`pandas_udf`修饰器装饰函数，就可以定义一个`pandas UDF`.对spark来说，UDF就是一个普通的pyspark函数。
+`Pandas UDF`是用户定义的函数， Spark是用arrow传输数据并用pandas来运行`pandas UDF`， `pandas UDF`使用向量计算，相比于旧版本的`row-at-a-time`python udf, 最多增加100倍的性能. 使用`pandas_udf`修饰器装饰函数，就可以定义一个`pandas UDF`.对spark来说，UDF就是一个普通的pyspark函数。
 从spark3.0开始， 推荐使用python类型(`type hint`)来定义pandas udf.
 定义类型的时候，`StructType`需要使用`pandas.DataFrame`类型， 其他一律使用`pandas.Series`类型。
 ```
@@ -41,7 +56,7 @@ import pandas as pd
 from pyspark.sql.functions import pandas_udf
 
 @pandas_udf("col1 string, col2 long")
-def func(s1: pd.series, s2: pd.series, s3: pd.DataFrame) -> pd.DataFrame:
+def func(s1: pd.Series, s2: pd.Series, s3: pd.DataFrame) -> pd.DataFrame:
   s3['col2'] = s1+s2.str.len()
   s3['col1'] = 'sss'
   return s3
@@ -139,6 +154,8 @@ DataFrame[x: bigint]
 Scalar具体的类型必须是原生python类型如int, float等等， 或者是numpy的数据类型如numpy.int64, numpy.float64
 这种UDF可以被用于`groupBy(), agg(), pyspark.sql.Window`.
 ```
+>>> from pyspark.sql import Window
+
 >>> df = spark.createDataFrame([(1,1.0), (1,2.0),(2,3.0),(2,4.0),(2,10.0)], ('id','v'))
 >>> df
 DataFrame[id: bigint, v: double]
@@ -185,25 +202,12 @@ DataFrame[id: bigint, v: double]
 |  2|10.0|5.666666666666667|
 +---+----+-----------------+
 ```
-## 为什么普通的python UDF慢?
-普通的python udf需要经过如下步骤来和jvm交互：
-- jvm中一条数据序列化
-- 序列化的数据发送到python进程
-- 记录被python反序列化
-- 记录被python处理
-- 结果被python序列化
-- 结果被发送到jvm
-- jvm反序列化并存储结果到dataframe
-所以python udf会比java和scala原生的udf慢。
-但是使用pandas udf可以克服数据传输中需要的序列化问题，关键是使用了Arrow. spark使用arrow把JVM中的Dataframe转为可共享的buffer, 然后python也可以把这块共享buffer作为pandas的dataframe, 所以python可以直接在共享内存上操作。
-以上，我们总结一下，使用arrow主要有两个好处：
-1. 不在需要python和jvm序列化和反序列化数据。因为直接使用了共享内存
-2. pandas有很多使用c实现的方法， 可以直接使用。
+
 ## Spark的Pandas函数API
-普通pandas的函数可以直接应用于在Spark的DataFrame上， 使用`applyInPandas`或者`mapInPandas`函数。
+Spark有一些函数可以让python的函数通过pandas实例直接用在spark dataframe上。内部机制上类似`pandas udf`, jvm把数据转成arrow的buffer, 然后pandas可以直接在buffer上操作。但是区别是，这些函数api使用起来就像普通pyspark api一样是作用在dataframe上的, 而不像udf那样作用于一个`column`. 实际使用的时候，一般是`DataFrame.groupby().applyInPandas()`或者`DataFrame.groupby().mapInPandas()`
 
 ### Grouped Map api
-Spark的dataframe在`groupby`后使用普通的pandas函数， 如`df.groupby().applyInPandas(func, schema))`， 普通的pandas函数需要输入时pandas dataframe, 返回普通的pandas dataframe. 上面这写法会把每个分组映射到pandas dataframe.
+Spark的dataframe在`groupby`后使用普通的pandas函数， 如`df.groupby().applyInPandas(func, schema))`， 普通的pandas函数需要输入是pandas dataframe, 返回普通的pandas dataframe. 上面这写法会把每个分组group映射到pandas dataframe.
 `df.groupby().applyInPandas(func, schema))`过程其实分为三步， 典型的`split-apply-combine`模式：
 - `DataFrame.groupBy`分组数据
 - 分组的数据映射到pandas dataframe后，apply到传入的函数
