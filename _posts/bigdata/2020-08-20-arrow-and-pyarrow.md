@@ -30,7 +30,7 @@ Arrow的主要用处可以是大数据的快速移动和处理。由于是开发
 pip安装的pyarrow少了一些cython编写的pyx代码，这些文件被编译成pxd或so后可以被py代码import, 比如`from pyarrow.lib import (ChunkedArray, RecordBatch, Table)`
 是从lib.so中导入的。
 
-### __int__.py源码解读
+### __init__.py源码解读
 首先导入版本号，如果不是通过包安装，那么版本通过解析`git describe`确定版本。
 接着导入cython的pyarrow.lib库，由于Cython有个bug(https://github.com/cython/cython/issues/3603), 这里暂时关掉gc。
 然后有一个`show_versions`的函数可以查看c++版本信息：
