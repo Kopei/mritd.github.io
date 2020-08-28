@@ -22,7 +22,7 @@ tags: big data
 
 ### Map/Reduce函数
 `Map/Reduce`是一种特殊(简单)的DAG. 图如下所示: 每个`map`函数把一组数据按key分为`key/value`对, 然后不同`key`的元素跑到不同的计算节点, 在那里进行`reduce`合并.
-![https://imgur.com/YrZrBZN]
+<blockquote class="imgur-embed-pub" lang="en" data-id="YrZrBZN"><a href="//imgur.com/YrZrBZN"></a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
 ``` 
 map(input_records) {
 emit(k1, v1)
