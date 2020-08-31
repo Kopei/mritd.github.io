@@ -30,7 +30,7 @@ Arrow的主要用处可以是大数据的快速移动和处理。由于是开发
 pip安装的pyarrow少了一些cython编写的pyx代码，这些文件被编译成pxd或so后可以被py代码import, 比如`from pyarrow.lib import (ChunkedArray, RecordBatch, Table)`
 是从lib.so中导入的。
 
-### __init__.py源码解读
+### pyarrow.\__init\__.py源码解读
 首先导入版本号，如果不是通过包安装，那么版本通过解析`git describe`确定版本。
 接着导入cython的pyarrow.lib库，由于Cython有个bug(https://github.com/cython/cython/issues/3603), 这里暂时关掉gc。
 然后有一个`show_versions`的函数可以查看c++版本信息：
@@ -170,10 +170,11 @@ b'some data'
 
 #### OSFile和Memory Mapped Files
 对于在磁盘上的文件，pyarrow提供标准系统级别的文件api和memory-mapped文件。memory-mapped是在用户态创建虚拟空间来映射磁盘上的内容。
-通过对這段虚拟内存的讀取和修改, 实现对文件的讀取和修改。使用虚拟内存进行映射进行文件读写有几个好处：
-- 可以不用读取整个文件，文件已经在虚拟内存中
+通过对這段虚拟内存的讀取和修改, 实现对文件的讀取和修改。使用虚拟内存映射进行文件读写有几个好处：
+- 可以不用读取整个文件进入物理内存，文件已经在虚拟内存中
 - 可以用对内存的操作命令来操作文件
 - 由于实际上这个mapped文件还是文件，与进程无关，所以这段虚拟内存可以共享给多个进程。
+
 ```python
 >>> mmap = pa.memory_map('example1.dat')
 >>> mmap.read()
@@ -197,7 +198,9 @@ b'data'
 b'friends'
 ```
 
-### plasma.py文件源码解读
+### plasma
+plasma是arrow的一个共享对象存储，plasma只能用在单机上，客户端和服务端使用unix domain socket通信。plasma中的对象是不可变的。
+#### pyarrow.plasma
 这个文件一上来要导入TensorFlow相关库，暂时跳过。
 主要功能函数式，用来启动plasma server.
 ```
