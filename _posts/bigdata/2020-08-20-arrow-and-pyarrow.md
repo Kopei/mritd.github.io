@@ -11,16 +11,16 @@ tags: big data
 
 ## 前言
 Apache Arrow是一个用于内存分析的跨语言开发平台。它定义了一种标准的、语言无关的列式内存数据格式。
-这种格式支持平的和嵌套的数据。它还提供了一些计算库和零拷贝流式消息和内部进程通信。
+这种格式支持平整的和嵌套的数据结构。它还提供了一些计算库，零拷贝流式消息和内部进程通信。
 Arrow的主要用处可以是大数据的快速移动和处理。由于是开发平台，Arrow包含了许多组件：
-- Arrow列式内存格式：一个标准和高效的内存表示。可用于平的和嵌套的数据
+- Arrow列式内存格式：一个标准和高效的内存表示。可用于平的和嵌套的数据结构，做到了语言无关。
 - Arrow IPC格式：一种高效的序列化格式，并且带有元信息，可用于进程和异构环境间的通信
 - Arrow Flight RPC协议：基于Arrow IPC格式，用于远程服务交换arrow数据与应用定义的语义数据
 - C++, C, C#, Go, Python, Matlib, Java等等库
 - Grandiva: 一个LLVM编译器
 - Plasma对象存储：一个共享内存blob存储
 
-本文主要展示一些python的实践案例， 希望能够总结以期有进一步了解Arrow.
+本文主要展示一些python的实践案例和源码解读， 希望能够总结以期有进一步了解Arrow.
 
 ## Dive into
 下面让我们去看一看pyarrow的源代码（1.0.0)
@@ -45,16 +45,16 @@ Arrow C++ compiler flags:  -fdiagnostics-color=always -O3 -DNDEBUG
 Arrow C++ git revision: b0d623957db820de4f1ff0a5ebd3e888194a48f0
 Arrow C++ git description: apache-arrow-0.16.0-1340-gb0d623957
 ```
-然后导入Cython定义的各种类型
+然后导入Cython定义的各种类型，
 导入buffer和IO相关。关于Pyarrow的memory和IO, 下面会介绍。
 导入异常，
 导入序列化相关，到这lib模块导入完毕。
-然后从hdfs.py，ipc.py, filesystem.py, serialization.py,types.py导入相关模块
-定义启动server函数和一些其他的包工具函数。
+然后从hdfs.py，ipc.py, filesystem.py, serialization.py,types.py导入相关模块，
+定义启动plasma server入口函数和一些其他的包工具函数。
 
 
 ### pyarrow的内存和IO管理
-本节主要总结pyarrow的内存管理和IO管理，涉及buffer, memory pool和file-like or stream-like对象
+本节主要总结pyarrow的内存管理和IO管理，涉及buffer, memory pool和file-like/stream-like对象
 #### 访问和分配内存
 在`pyarrow.__init__.py`可以看到代码的引入:
 ```python
@@ -70,7 +70,7 @@ from pyarrow.lib import (MemoryPool, LoggingMemoryPool, ProxyMemoryPool,
 ```
 **pyarrow.Buffer**
 `Buffer`对象是C++代码`arrow::Buffer`的封装，作为基础工具管理C++中的arrow内存。一个buffer代表一段连续的内存空间。
-大部分buffer拥有他们各自的内存，但是也有例外。Buffer对象可以允许array类安全地和属于或不属于他们的内存交互。`arrow::Buffer`
+大部分buffer拥有他们各自的内存，但是也有例外。Buffer对象可以允许高级array类安全地和属于或不属于他们的内存交互。`arrow::Buffer`
 允许一个buffer访问另一个buffer通过zero-copy, 同时保持内存的生命周期和清晰的父子关系。
 `arrow::Buffer`有很多种实现，但是对外接口是一致的：一个数据指针和长度。有点类似python自带的buffer和`memoryview`对象
 ```python
@@ -169,10 +169,10 @@ b'some data'
 ```
 
 #### OSFile和Memory Mapped Files
-对于在磁盘上的文件，pyarrow提供标准系统级别的文件api和memory-mapped文件。memory-mapped是在用户态创建虚拟空间来映射磁盘上的内容。
+对于在磁盘上的文件读写，pyarrow提供标准系统级别的文件api和memory-mapped文件。memory-mapped是在用户态创建虚拟空间来映射磁盘上的内容。
 通过对這段虚拟内存的讀取和修改, 实现对文件的讀取和修改。使用虚拟内存映射进行文件读写有几个好处：
 - 可以不用读取整个文件进入物理内存，文件已经在虚拟内存中
-- 可以用对内存的操作命令来操作文件
+- 可以用对内存的操作命令来操作文件，更加高效
 - 由于实际上这个mapped文件还是文件，与进程无关，所以这段虚拟内存可以共享给多个进程。
 
 ```python
@@ -200,7 +200,7 @@ b'friends'
 
 ### plasma
 plasma是arrow的一个共享对象存储，plasma只能用在单机上，客户端和服务端使用unix domain socket通信。plasma中的对象是不可变的。
-#### pyarrow.plasma
+#### pyarrow.plasma源码
 这个文件一上来要导入TensorFlow相关库，暂时跳过。
 主要功能函数式，用来启动plasma server.
 ```
