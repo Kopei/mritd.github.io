@@ -217,6 +217,112 @@ def start_plasma_store(plasma_store_memory,
 ```
 这个函数会默认创建`/tmp/test_plasma-plasma.sock`用于客户端sock连接, 然后就是普通的shell命令行选取参数启动server.
 
+#### 使用plasma共享pandas dataframe
+由于arrow支持平整或嵌套的数据结构，尤其适合pandas dataframe或者numpy(使用tensor), 然后我们可以把arrow格式的数据持久化到plasma用于共享对象，实现数据的高效读取。
+核心代码就三步，1.创建plasma对象，2.存入转为recordbatch的dataframe, 3.读取plasma的dataframe对象。
+```python
+# basic plasma client
+class PlasmaClient:
+    def __init__(self, location="plasma", *args, **kwargs):
+        self.client = plasma.connect(location)
 
+    def get_object_id(self, name):
+        name = self.pad_str_with_20char(name)
+        id = plasma.ObjectID(name)
+        return id
 
+    def pad_str_with_20char(self, name):
+        if len(name) < 20:
+            name = f"{name:<20}"
+        else:
+            name = name[:20]
+        return name.encode()
+
+    def decode_hex_bytes(self, hex):
+        return bytes.fromhex(hex).decode()
+
+    def get_object(self, object_id):
+        obj = self.client.get(object_id)
+        return obj
+
+    def set_object(self, obj):
+        self.client.put(obj)
+
+    def create_buffer(self, obj, object_id):
+        object_size = len(obj)
+        buf = memoryview(self.client.create(object_id, object_size))
+        for i in range(object_size):
+            buf[i] = i % 128
+
+    def seal_buffer(self, object_id):
+        self.client.seal(object_id)
+
+    def get_buffer(self, object_id):
+        [buffer] = self.client.get_buffers([object_id])
+        return buffer
+
+    def list_objects(self):
+        return self.client.list()
+
+```
+
+然后写一个子类能够使用plasma存储对象来读取dataframe:
+```python
+class PlasmaPandas(PlasmaClient):
+    def __init__(self, name, location="plasma"):
+        super().__init__(location)
+        self.object_id = self.get_object_id(name)
+
+    def dataFrame2recordBatch(self, df):
+        return pa.RecordBatch.from_pandas(df)
+
+    def create_plasma_obj_from_record_batch(self, record_batch):
+        # get the size of record batch and schema
+        mock_sink = pa.MockOutputStream()
+        stream_writer = pa.RecordBatchStreamWriter(mock_sink, record_batch.schema)
+        stream_writer.write_batch(record_batch)
+        stream_writer.close()
+        data_size = mock_sink.size()
+
+        buf = self.client.create(self.object_id, data_size)
+
+        # write dataframe into store
+        stream = pa.FixedSizeBufferWriter(buf)
+        stream_writer = pa.RecordBatchStreamWriter(stream, record_batch.schema)
+        stream_writer.write_batch(record_batch)
+        stream_writer.close()
+        self.seal_buffer(self.object_id)
+
+    def get_df_by_name(self): 
+        [data] = self.client.get_buffers([self.object_id])
+        arrow_buffer = pa.BufferReader(data)
+        # Convert object back into an Arrow RecordBatch
+        reader = pa.RecordBatchStreamReader(arrow_buffer)
+        record_batch = reader.read_next_batch()
+        result = record_batch.to_pandas()
+        return result
+
+    def get_df_column(self, column): #可以直接在arrow中取column, 性能比pandas快5-10倍 
+        [data] = self.client.get_buffers([self.object_id])
+        arrow_buffer = pa.BufferReader(data)
+        # Convert object back into an Arrow RecordBatch
+        reader = pa.RecordBatchStreamReader(arrow_buffer)
+        table = reader.read_all()
+        try:
+            result = table.select(["index", column]).to_pandas()
+        except KeyError:
+            return pd.DataFrame()
+        return result
+        
+    def store_df_in_store(self, df): 
+        rb = self.dataFrame2recordBatch(df)
+        self.create_plasma_obj_from_record_batch(rb)
+```
+在应用中使用：
+```python
+pp = PlasmaPandas('obj_key')
+df = pd.read_csv('example.csv')
+pp.store_df_in_store(df)
+df = pp.get_df_column('col_name')
+```
         
