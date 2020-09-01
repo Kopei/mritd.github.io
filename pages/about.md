@@ -17,7 +17,7 @@ permalink: /about/
 
 ### 工作经历
 **2019.5-now	礼来中国	Scrum Master	中国上海**
-- 60%作为core developer, 开发和维护OncoSolve System(带3人)。项目案例: OncoSolve基因数据模型查询和分析系统, 数据包含TCGA, CCLE, PDX, ResistantLine, StimulationLine, DrugComponent等超过200G的数据, 涉及技术栈:Django, ReactJS, MySQL, Redis, HDF5, Apache Arrow, Plasma, Apache Spark, OpenID, Microsoft Active Directory, PingID, Jenkins, Lilly Cloud, AWS managed services。
+- 60%作为core developer, 开发和维护OncoSolve System(带3人)。项目案例: OncoSolve基因数据模型查询和分析系统, 涉及技术栈:Django, ReactJS, MySQL, Redis, HDF5, Apache Arrow, Plasma, Apache Spark, OpenID, Microsoft Active Directory, PingID, Jenkins, Lilly Cloud, AWS managed services。
 - 20%作为Scrum Master, 与stakeholder沟通需求, 确定技术实现和任务分配, 进度管理。
 - 20%作为DevOpser, 维护Lilly Cloud, 配合企业级软件搭建CI/CD , 权限系统和监控系统等。
 
@@ -35,8 +35,8 @@ permalink: /about/
 - 负责海洋1C水色仪预研项目, 主要工作内容是硬件设计和FPGA代码编写。
 
 ### 职业技能
-语言能力：	普通话（母语）、沪语(精通) 、粤语（入门）、英语（精通）；GRE（1350/1600）、英语六级
-相关证书：	AWS Certified DevOps Engineer - Professional (K1PB9662KFB41K3Y)
+- 语言能力：	普通话（母语）、沪语(精通) 、粤语（入门）、英语（精通）；GRE（1350/1600）、英语六级
+- 相关证书：	AWS Certified DevOps Engineer - Professional (K1PB9662KFB41K3Y)
 
 
 
