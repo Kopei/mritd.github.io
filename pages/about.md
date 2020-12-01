@@ -16,7 +16,7 @@ permalink: /about/
 - 2007-2011	同济大学	电气控制自动化学士	中国上海
 
 ### 工作经历
-**2019.5-now	礼来中国	Scrum Master	中国上海**
+**2019.5-2020-10	礼来中国	Scrum Master	中国上海**
 - 60%作为core developer, 开发和维护OncoSolve System(带3人)。项目案例: OncoSolve基因数据模型查询和分析系统, 涉及技术栈:Django, ReactJS, GraphQL, Redis, HDF5, Apache Arrow, Plasma, Apache Spark, OpenID, Microsoft Active Directory, PingID, Jenkins, Lilly Cloud, AWS managed services。
 - 20%作为Scrum Master, 与stakeholder沟通需求, 确定技术实现和任务分配, 进度管理。
 - 20%作为DevOpser, 维护Lilly Cloud, 配合企业级软件搭建CI/CD , 权限系统和监控系统等。
