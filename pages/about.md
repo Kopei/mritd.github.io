@@ -21,7 +21,7 @@ permalink: /about/
 - 20%作为Scrum Master, 与stakeholder沟通需求, 确定技术实现和任务分配, 进度管理。
 - 20%作为DevOpser, 维护Lilly Cloud, 配合企业级软件搭建CI/CD , 权限系统和监控系统等。
 
-**2016.10-now	明码生物	经理	中国上海**
+**2016.10-2020-10	明码生物	经理	中国上海**
 - 40%负责本地LIMS系统维护和人员管理(带7人)。 项目案例: BioLims本地化开发和维护, 涉及技术栈: Java Spring, Tomcat, Jenkins, Oracle。
 - 20%负责本地大数据软件系统维护部署和下游API开发。 项目案例: 负责将冰岛团队软件产品CSA本地化，包括部署、本地下游API开发、性能监控。支持中国区销售业务, 配合销售将软件在客戶不同数据中心安装落地。涉及技术栈: Ansible, Chef, Terraform/Docker, jenkins, Redis, PostgresSQL/KeyCloak, Prometheus, Grafana, AlertManager/Rails, Spring。
 - 20%负责云上软件系统管理, 并迁移本地软件系统到云上, 项目案例: 负责迁移本地软件系统CAPA到阿里云容器服务，搭建云上数据库和中间件(Redis, MySQL，MQ);整合k8s搭建CI/CD系统。涉及技术栈:Kubernetes, Docker阿里云及各个服务(NAS, OSS, MySQL, Redis, MQ) 
