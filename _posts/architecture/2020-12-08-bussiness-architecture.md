@@ -20,7 +20,7 @@ tags: architecture
 - **Protege** 用于规划拓扑图 [https://protege.stanford.edu/](https://protege.stanford.edu/)
 - **DrawIO** 是一个线上项目用于创建流程图。类似国内的有processon. [https://app.diagrams.net/](https://app.diagrams.net/)
 
-## 业务架构原则
+## 业务架构设计原则
 有一个清晰的业务原则对于成功的企业至关重要。有原则也是在限定的时间和资源下构建好的架构的基础，这些原则需要所有的利益相关者都参与和同意。
 
 ### 一些常见的原则
