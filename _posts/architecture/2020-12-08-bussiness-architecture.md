@@ -39,7 +39,7 @@ tags: architecture
 **原因：**最好MVP不要超过一个月构建。<br>
 **言下之意：**MVP不是用来贩卖的，而是从后续的阶段中学习如何贩卖。<br>
 
-#### make it easy first and make it fast先简单做然后快速做
+#### make it easy first then make it fast先简单做然后快速做
 **原则：**先简单做， 然后快速做，最后做的漂亮. <br>
 **原因：**开发新项目的成本是很高的，做一个优秀的产品更加复杂和昂贵。所以在做MVP的时候，尝试着让产品易用和易改。 <br>
 **言下之意：**一些性能之类的问题可以后面再考虑。<br>
