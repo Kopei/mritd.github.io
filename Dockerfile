@@ -4,7 +4,7 @@ ENV TZ 'Asia/Shanghai'
 
 WORKDIR /root
 
-ADD Gemfile Gemfile.lock ./
+ADD Gemfile ./
 RUN apk upgrade --no-cache && \
     apk add --no-cache bash tzdata nodejs py-pygments git gcc musl-dev make g++ && \
     gem install --no-document bundle && \
