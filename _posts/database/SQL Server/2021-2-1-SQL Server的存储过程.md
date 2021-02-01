@@ -2,7 +2,7 @@
 layout: post
 title: SQL Server的存储过程
 categories: [database]
-description: 简介
+description: SQL Server Stored Procedures Introduction
 keywords: SQLServer
 catalog: true
 multilingual: false
