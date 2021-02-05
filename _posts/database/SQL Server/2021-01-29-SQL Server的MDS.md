@@ -20,3 +20,5 @@ SQLServer的MDS可以用来管理组织的主数据，并且通过Excel分享这
 ## MDS使用流程
 创建一个model --> 创建多个entities --> 创建*domain-based* entities --> 创建*free-form* entities --> 创建属性组 --> 导入entities数据 --> 使用业务逻辑确保数据质量 --> 创建层级结构 --> 创建显式层级如需 --> 把组聚为集合如需 --> 创建自定义元数据 --> 给model打个版本号 --> 创建订阅视图 --> 配置权限
 
+
+## 
