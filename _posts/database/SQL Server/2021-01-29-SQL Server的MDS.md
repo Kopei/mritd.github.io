@@ -4,7 +4,7 @@ title: SQL Server的主数据服务MDS简介
 categories: [database]
 description: 主数据管理和MDS
 keywords: SQLServer
-updated_at: 2021-02-09 17:30:00 +0000
+updated_at: 2021/02/09
 catalog: true
 multilingual: false
 tags: database, Master data
@@ -61,7 +61,7 @@ MDS 一般要和 DQS 和 SSIS 结合使用，用于数据的集成和ETL。
 - `Configuration Manager`, 配置管理工具用于配置数据库和 web 应用。
 - `Master Data Manager`, Web 应用用于管理任务，配置接口和视图。
 - `MDSModelDeploy.exe`, 部署工具。
-- `MDS Web Service`, SOA
+- `MDS Web Service`, SOA.可以在这使用代码来配置`Master Data Manager`.
 - `Add-in for Excel`, excel 插件。
 
 ## MDS 使用流程
