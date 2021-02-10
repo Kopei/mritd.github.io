@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Openshift Deployment
-update_date: 2018-02-21
+updated_at: 2018-02-21
 categories: [openshift, kubernetes]
 description: 
 keywords: openshift

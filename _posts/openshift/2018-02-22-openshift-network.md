@@ -2,7 +2,7 @@
 layout: post
 title: Openshift的网路
 comment: true
-update_date: 2018-02-28
+updated_at: 2018-02-28
 categories: [openshift, kubernetes]
 description: 
 keywords: openshift
