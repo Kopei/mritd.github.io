@@ -47,7 +47,7 @@ comments: false
                         </span>
                         {% if post.updated_at %}
                         <span class="meta-info">
-                          <span class="octicon octicon-calendar"></span> update {{ post.date | date: "%Y/%m/%d" }}
+                          <span class="octicon octicon-calendar"></span> update {{ post.updated_at| date: "%Y/%m/%d" }}
                         </span>
                         {% endif %}
                         {% for cat in post.categories %}
